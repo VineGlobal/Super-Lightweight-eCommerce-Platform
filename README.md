@@ -22,12 +22,13 @@ The following are other notable features:
 <a href="https://docs.google.com/spreadsheets/d/12Ljjd8dChaHq2YOExKXw77ri2UDgixQTVuZBgMY-o30/edit?usp=sharing">Google Sheets Back-end</a>
 
 <br>
-![Google Sheets](http://blog.vineglobal.com/images/google-sheets-live-small.png)
+### Google Sheets Screenshot
+![Google Sheets](http://blog.vineglobal.com/images/google-sheets-live.png)
 
-### Home Page
+### Home Page Screenshot
 ![Home Page](http://blog.vineglobal.com/images/home-page-small.png)
 
-### Shopping Cart
+### Shopping Cart Screenshot
 ![Shopping Cart](http://blog.vineglobal.com/images/shopping-cart-small.png)
 
 If you have any questions about this project, please contact us at <info@vineglobal.com> to learn more.
