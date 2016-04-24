@@ -6,7 +6,7 @@
   <img src='http://store.vineos.io/images/home-page.PNG' width="30%"/>
 </div>
 <br>
-![Home Page](/images/home-page.PNG)
+![Home Page](http://blog.vineglobal.com/images/shopping-cart.PNG)
 
 We like to work on a side-projects (maybe even to a fault). We recently released a new SaaS-based e-commerce platform geared for small businesses.  This platform is unique in several ways. First, the database is not really a database at all. The eCommerce platform's data is stored in Google Sheets. The product catalog, category management, and multi-lingual support are maintained using Google Sheets, and every data modification is updated in real-time. We initially started this project as a “proof of concept”, but we were pleasantly surprised how quickly we could launch a new e-commerce storefront. 
 
