@@ -3,7 +3,8 @@
 ## Super Lightweight eCommerce Platform --  Built with AngularJS and Google Sheets
 
 <div class="row text-center">
-  <img src='images/home-page.PNG' width="30%"/>
+  <img src='http://store.vineos.io/images/home-page.PNG' width="30%"/>
+  
 </div>
 <br>
 
