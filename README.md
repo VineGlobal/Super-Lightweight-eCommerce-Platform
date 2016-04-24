@@ -19,12 +19,6 @@ The following are other notable features:
 
 ![Shopping Cart](http://blog.vineglobal.com/images/shopping-cart.PNG)
 
-<div class="row text-center">
-  <img src='images/shopping-cart.PNG' width="30%"/>
-</div>
-<br>
-
-
 **Front-end Demo (English):** [http://store.vineos.io](http://store.vineos.io)
 
 **Front-end Demo (Spanish/Español):** [http://store-es.vineos.io](http://store-es.vineos.io)
@@ -33,14 +27,6 @@ The following are other notable features:
 <a href="https://docs.google.com/spreadsheets/d/12Ljjd8dChaHq2YOExKXw77ri2UDgixQTVuZBgMY-o30/edit?usp=sharing">Google Sheets Back-end</a>
 
 <br>
-
-<div class="row text-center">
-  <img src='images/google-sheets-live.png' width="90%"/>
-</div>
-<br>
-
-
-Are you interested in learning more about this platform? Please contact us at <info@vineglobal.com> to learn more.
-Super Lightweight eCommerce Platform -- Built with AngularJS and Google Sheets    The eCommerce platform's data is stored in Google Sheets. The product catalog, category management, and multi-lingual support are maintained using Google Sheets, and every data modification is updated in real-time.
+![Shopping Cart](http://blog.vineglobal.com/images/google-sheets-live.png)
 
 If you have any questions about this project, please contact us at <info@vineglobal.com> to learn more.
