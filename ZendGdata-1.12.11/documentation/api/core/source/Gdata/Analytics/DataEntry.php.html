@@ -1,0 +1,161 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Analytics
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * @see Zend_Gdata_Entry
+ */
+require_once 'Zend/Gdata/Entry.php';
+
+/**
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Analytics
+ */
+class Zend_Gdata_Analytics_DataEntry extends Zend_Gdata_Entry
+{
+    /**
+     * @var array
+     */
+    protected $_dimensions = array();
+    /**
+     * @var array
+     */
+    protected $_metrics = array();
+
+    /**
+     * @param DOMElement $element
+     */
+    public function __construct($element = null)
+    {
+        $this-&gt;registerAllNamespaces(Zend_Gdata_Analytics::$namespaces);
+        parent::__construct($element);
+    }
+
+    /**
+     * @param DOMElement $child
+     * @return void
+     */
+    protected function takeChildFromDOM($child)
+    {
+        $absoluteNodeName = $child-&gt;namespaceURI . ':' . $child-&gt;localName;
+        switch ($absoluteNodeName) {
+            case $this-&gt;lookupNamespace('analytics') . ':' . 'dimension';
+                $dimension = new Zend_Gdata_Analytics_Extension_Dimension();
+                $dimension-&gt;transferFromDOM($child);
+                $this-&gt;_dimensions[] = $dimension;
+                break;
+            case $this-&gt;lookupNamespace('analytics') . ':' . 'metric';
+                $metric = new Zend_Gdata_Analytics_Extension_Metric();
+                $metric-&gt;transferFromDOM($child);
+                $this-&gt;_metrics[] = $metric;
+                break;
+            default:
+                parent::takeChildFromDOM($child);
+                break;
+        }
+    }
+
+    /**
+     * @param string $name 
+     * @return mixed
+     */
+    public function getDimension($name)
+    {
+        foreach ($this-&gt;_dimensions as $dimension) {
+            if ($dimension-&gt;getName() == $name) {
+                return $dimension;
+            }
+        }
+        return null;
+    }
+    
+    /** 
+     * @param string $name 
+     * @return mixed
+     */
+    public function getMetric($name)
+    {
+        foreach ($this-&gt;_metrics as $metric) {
+            if ($metric-&gt;getName() == $name) {
+                return $metric;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * @param string $name 
+     * @return mixed
+     */
+    public function getValue($name)
+    {
+        if (null !== ($metric = $this-&gt;getMetric($name))) {
+            return $metric;
+        }
+        return $this-&gt;getDimension($name);
+    }
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

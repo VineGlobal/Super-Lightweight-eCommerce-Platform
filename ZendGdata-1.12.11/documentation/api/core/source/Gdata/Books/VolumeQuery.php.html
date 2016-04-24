@@ -1,0 +1,157 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Books
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * Zend_Gdata_Books
+ */
+require_once('Zend/Gdata/Books.php');
+
+/**
+ * Zend_Gdata_Query
+ */
+require_once('Zend/Gdata/Query.php');
+
+/**
+ * Assists in constructing queries for Books volumes
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Books
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Gdata_Books_VolumeQuery extends Zend_Gdata_Query
+{
+
+    /**
+     * Create Gdata_Books_VolumeQuery object
+     *
+     * @param string|null $url If non-null, pre-initializes the instance to
+     *        use a given URL.
+     */
+    public function __construct($url = null)
+    {
+        parent::__construct($url);
+    }
+
+    /**
+     * Sets the minimum level of viewability of volumes to return in the search results
+     *
+     * @param string|null $value The minimum viewability - 'full' or 'partial'
+     * @return Zend_Gdata_Books_VolumeQuery Provides a fluent interface
+     */
+    public function setMinViewability($value = null)
+    {
+        switch ($value) {
+            case 'full_view':
+                $this-&gt;_params['min-viewability'] = 'full';
+                break;
+            case 'partial_view':
+                $this-&gt;_params['min-viewability'] = 'partial';
+                break;
+            case null:
+                unset($this-&gt;_params['min-viewability']);
+                break;
+        }
+        return $this;
+    }
+
+    /**
+     * Minimum viewability of volumes to include in search results
+     *
+     * @return string|null min-viewability
+     */
+    public function getMinViewability()
+    {
+        if (array_key_exists('min-viewability', $this-&gt;_params)) {
+            return $this-&gt;_params['min-viewability'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Returns the generated full query URL
+     *
+     * @return string The URL
+     */
+    public function getQueryUrl()
+    {
+        if (isset($this-&gt;_url)) {
+            $url = $this-&gt;_url;
+        } else {
+            $url = Zend_Gdata_Books::VOLUME_FEED_URI;
+        }
+        if ($this-&gt;getCategory() !== null) {
+            $url .= '/-/' . $this-&gt;getCategory();
+        }
+        $url = $url . $this-&gt;getQueryString();
+        return $url;
+    }
+
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

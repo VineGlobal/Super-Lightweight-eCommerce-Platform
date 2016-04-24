@@ -1,0 +1,312 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage App
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * @see Zend_Gdata_App_Entry
+ */
+require_once 'Zend/Gdata/App/Entry.php';
+
+/**
+ * @see Zend_Gdata_App_FeedSourceParent
+ */
+require_once 'Zend/Gdata/App/FeedEntryParent.php';
+
+/**
+ * @see Zend_Gdata_App_Extension_Generator
+ */
+require_once 'Zend/Gdata/App/Extension/Generator.php';
+
+/**
+ * @see Zend_Gdata_App_Extension_Icon
+ */
+require_once 'Zend/Gdata/App/Extension/Icon.php';
+
+/**
+ * @see Zend_Gdata_App_Extension_Logo
+ */
+require_once 'Zend/Gdata/App/Extension/Logo.php';
+
+/**
+ * @see Zend_Gdata_App_Extension_Subtitle
+ */
+require_once 'Zend/Gdata/App/Extension/Subtitle.php';
+
+/**
+ * Atom feed class
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage App
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+abstract class Zend_Gdata_App_FeedSourceParent extends Zend_Gdata_App_FeedEntryParent
+{
+
+    /**
+     * The classname for individual feed elements.
+     *
+     * @var string
+     */
+    protected $_entryClassName = 'Zend_Gdata_App_Entry';
+
+    /**
+     * Root XML element for Atom entries.
+     *
+     * @var string
+     */
+    protected $_rootElement = null;
+
+    protected $_generator = null;
+    protected $_icon = null;
+    protected $_logo = null;
+    protected $_subtitle = null;
+
+    /**
+     * Set the HTTP client instance
+     *
+     * Sets the HTTP client object to use for retrieving the feed.
+     *
+     * @deprecated Deprecated as of Zend Framework 1.7. Use
+     *             setService() instead.
+     * @param  Zend_Http_Client $httpClient
+     * @return Zend_Gdata_App_FeedSourceParent Provides a fluent interface
+     */
+    public function setHttpClient(Zend_Http_Client $httpClient)
+    {
+        parent::setHttpClient($httpClient);
+        foreach ($this-&gt;_entry as $entry) {
+            $entry-&gt;setHttpClient($httpClient);
+        }
+        return $this;
+    }
+
+    /**
+     * Set the active service instance for this feed and all enclosed entries.
+     * This will be used to perform network requests, such as when calling
+     * save() and delete().
+     *
+     * @param Zend_Gdata_App $instance The new service instance.
+     * @return Zend_Gdata_App_FeedEntryParent Provides a fluent interface.
+     */
+    public function setService($instance)
+    {
+        parent::setService($instance);
+        foreach ($this-&gt;_entry as $entry) {
+            $entry-&gt;setService($instance);
+        }
+        return $this;
+    }
+
+    /**
+     * Make accessing some individual elements of the feed easier.
+     *
+     * Special accessors 'entry' and 'entries' are provided so that if
+     * you wish to iterate over an Atom feed's entries, you can do so
+     * using foreach ($feed-&gt;entries as $entry) or foreach
+     * ($feed-&gt;entry as $entry).
+     *
+     * @param  string $var The property to access.
+     * @return mixed
+     */
+    public function __get($var)
+    {
+        switch ($var) {
+            default:
+                return parent::__get($var);
+        }
+    }
+
+
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
+    {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this-&gt;_generator != null) {
+            $element-&gt;appendChild($this-&gt;_generator-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        if ($this-&gt;_icon != null) {
+            $element-&gt;appendChild($this-&gt;_icon-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        if ($this-&gt;_logo != null) {
+            $element-&gt;appendChild($this-&gt;_logo-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        if ($this-&gt;_subtitle != null) {
+            $element-&gt;appendChild($this-&gt;_subtitle-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        return $element;
+    }
+
+    /**
+     * Creates individual Entry objects of the appropriate type and
+     * stores them in the $_entry array based upon DOM data.
+     *
+     * @param DOMNode $child The DOMNode to process
+     */
+    protected function takeChildFromDOM($child)
+    {
+        $absoluteNodeName = $child-&gt;namespaceURI . ':' . $child-&gt;localName;
+        switch ($absoluteNodeName) {
+        case $this-&gt;lookupNamespace('atom') . ':' . 'generator':
+            $generator = new Zend_Gdata_App_Extension_Generator();
+            $generator-&gt;transferFromDOM($child);
+            $this-&gt;_generator = $generator;
+            break;
+        case $this-&gt;lookupNamespace('atom') . ':' . 'icon':
+            $icon = new Zend_Gdata_App_Extension_Icon();
+            $icon-&gt;transferFromDOM($child);
+            $this-&gt;_icon = $icon;
+            break;
+        case $this-&gt;lookupNamespace('atom') . ':' . 'logo':
+            $logo = new Zend_Gdata_App_Extension_Logo();
+            $logo-&gt;transferFromDOM($child);
+            $this-&gt;_logo = $logo;
+            break;
+        case $this-&gt;lookupNamespace('atom') . ':' . 'subtitle':
+            $subtitle = new Zend_Gdata_App_Extension_Subtitle();
+            $subtitle-&gt;transferFromDOM($child);
+            $this-&gt;_subtitle = $subtitle;
+            break;
+        default:
+            parent::takeChildFromDOM($child);
+            break;
+        }
+    }
+
+    /**
+     * @return Zend_Gdata_AppExtension_Generator
+     */
+    public function getGenerator()
+    {
+        return $this-&gt;_generator;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Generator $value
+     * @return Zend_Gdata_App_FeedSourceParent Provides a fluent interface
+     */
+    public function setGenerator($value)
+    {
+        $this-&gt;_generator = $value;
+        return $this;
+    }
+
+    /**
+     * @return Zend_Gdata_AppExtension_Icon
+     */
+    public function getIcon()
+    {
+        return $this-&gt;_icon;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Icon $value
+     * @return Zend_Gdata_App_FeedSourceParent Provides a fluent interface
+     */
+    public function setIcon($value)
+    {
+        $this-&gt;_icon = $value;
+        return $this;
+    }
+
+    /**
+     * @return Zend_Gdata_AppExtension_logo
+     */
+    public function getlogo()
+    {
+        return $this-&gt;_logo;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_logo $value
+     * @return Zend_Gdata_App_FeedSourceParent Provides a fluent interface
+     */
+    public function setlogo($value)
+    {
+        $this-&gt;_logo = $value;
+        return $this;
+    }
+
+    /**
+     * @return Zend_Gdata_AppExtension_Subtitle
+     */
+    public function getSubtitle()
+    {
+        return $this-&gt;_subtitle;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Subtitle $value
+     * @return Zend_Gdata_App_FeedSourceParent Provides a fluent interface
+     */
+    public function setSubtitle($value)
+    {
+        $this-&gt;_subtitle = $value;
+        return $this;
+    }
+
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

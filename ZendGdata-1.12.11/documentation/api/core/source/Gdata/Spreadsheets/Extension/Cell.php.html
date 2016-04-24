@@ -1,0 +1,246 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Spreadsheets
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * @see Zend_Gdata_Entry
+ */
+require_once 'Zend/Gdata/Entry.php';
+
+/**
+ * @see Zend_Gdata_Extension
+ */
+require_once 'Zend/Gdata/Extension.php';
+
+
+/**
+ * Concrete class for working with cell elements.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Spreadsheets
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
+{
+    protected $_rootElement = 'cell';
+    protected $_rootNamespace = 'gs';
+
+    /**
+     * The row attribute of this cell
+     *
+     * @var string
+     */
+    protected $_row = null;
+
+    /**
+     * The column attribute of this cell
+     *
+     * @var string
+     */
+    protected $_col = null;
+
+    /**
+     * The inputValue attribute of this cell
+     *
+     * @var string
+     */
+    protected $_inputValue = null;
+
+    /**
+     * The numericValue attribute of this cell
+     *
+     * @var string
+     */
+    protected $_numericValue = null;
+
+    /**
+     * Constructs a new Zend_Gdata_Spreadsheets_Extension_Cell element.
+     *
+     * @param string $text (optional) Text contents of the element.
+     * @param string $row (optional) Row attribute of the element.
+     * @param string $col (optional) Column attribute of the element.
+     * @param string $inputValue (optional) Input value attribute of the element.
+     * @param string $numericValue (optional) Numeric value attribute of the element.
+     */
+    public function __construct($text = null, $row = null, $col = null, $inputValue = null, $numericValue = null)
+    {
+        $this-&gt;registerAllNamespaces(Zend_Gdata_Spreadsheets::$namespaces);
+        parent::__construct();
+        $this-&gt;_text = $text;
+        $this-&gt;_row = $row;
+        $this-&gt;_col = $col;
+        $this-&gt;_inputValue = $inputValue;
+        $this-&gt;_numericValue = $numericValue;
+    }
+
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
+    {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        $element-&gt;setAttribute('row', $this-&gt;_row);
+        $element-&gt;setAttribute('col', $this-&gt;_col);
+        if ($this-&gt;_inputValue) $element-&gt;setAttribute('inputValue', $this-&gt;_inputValue);
+        if ($this-&gt;_numericValue) $element-&gt;setAttribute('numericValue', $this-&gt;_numericValue);
+        return $element;
+    }
+
+    protected function takeAttributeFromDOM($attribute)
+    {
+        switch ($attribute-&gt;localName) {
+        case 'row':
+            $this-&gt;_row = $attribute-&gt;nodeValue;
+            break;
+        case 'col':
+            $this-&gt;_col = $attribute-&gt;nodeValue;
+            break;
+        case 'inputValue':
+            $this-&gt;_inputValue = $attribute-&gt;nodeValue;
+            break;
+        case 'numericValue':
+            $this-&gt;_numericValue = $attribute-&gt;nodeValue;
+            break;
+        default:
+            parent::takeAttributeFromDOM($attribute);
+        }
+    }
+
+    /**
+     * Gets the row attribute of the Cell element.
+     * @return string Row of the Cell.
+     */
+    public function getRow()
+    {
+        return $this-&gt;_row;
+    }
+
+    /**
+     * Gets the column attribute of the Cell element.
+     * @return string Column of the Cell.
+     */
+    public function getColumn()
+    {
+        return $this-&gt;_col;
+    }
+
+    /**
+     * Gets the input value attribute of the Cell element.
+     * @return string Input value of the Cell.
+     */
+    public function getInputValue()
+    {
+        return $this-&gt;_inputValue;
+    }
+
+    /**
+     * Gets the numeric value attribute of the Cell element.
+     * @return string Numeric value of the Cell.
+     */
+    public function getNumericValue()
+    {
+        return $this-&gt;_numericValue;
+    }
+
+    /**
+     * Sets the row attribute of the Cell element.
+     * @param string $row New row of the Cell.
+     */
+    public function setRow($row)
+    {
+        $this-&gt;_row = $row;
+        return $this;
+    }
+
+    /**
+     * Sets the column attribute of the Cell element.
+     * @param string $col New column of the Cell.
+     */
+    public function setColumn($col)
+    {
+        $this-&gt;_col = $col;
+        return $this;
+    }
+
+    /**
+     * Sets the input value attribute of the Cell element.
+     * @param string $inputValue New input value of the Cell.
+     */
+    public function setInputValue($inputValue)
+    {
+        $this-&gt;_inputValue = $inputValue;
+        return $this;
+    }
+
+    /**
+     * Sets the numeric value attribute of the Cell element.
+     * @param string $numericValue New numeric value of the Cell.
+     */
+    public function setNumericValue($numericValue)
+    {
+        $this-&gt;_numericValue = $numericValue;
+    }
+
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

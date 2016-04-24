@@ -1,0 +1,220 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Gdata
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * @see Zend_Gdata_Extension
+ */
+require_once 'Zend/Gdata/Extension.php';
+
+/**
+ * @see Zend_Gdata_Feed
+ */
+require_once 'Zend/Gdata/Feed.php';
+
+/**
+ * Represents the gd:feedLink element
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Gdata
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Gdata_Extension_FeedLink extends Zend_Gdata_Extension
+{
+
+    protected $_rootElement = 'feedLink';
+    protected $_countHint = null;
+    protected $_href = null;
+    protected $_readOnly = null;
+    protected $_rel = null;
+    protected $_feed = null;
+
+    public function __construct($href = null, $rel = null,
+            $countHint = null, $readOnly = null, $feed = null)
+    {
+        parent::__construct();
+        $this-&gt;_countHint = $countHint;
+        $this-&gt;_href = $href;
+        $this-&gt;_readOnly = $readOnly;
+        $this-&gt;_rel = $rel;
+        $this-&gt;_feed = $feed;
+    }
+
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
+    {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this-&gt;_countHint !== null) {
+            $element-&gt;setAttribute('countHint', $this-&gt;_countHint);
+        }
+        if ($this-&gt;_href !== null) {
+            $element-&gt;setAttribute('href', $this-&gt;_href);
+        }
+        if ($this-&gt;_readOnly !== null) {
+            $element-&gt;setAttribute('readOnly', ($this-&gt;_readOnly ? &quot;true&quot; : &quot;false&quot;));
+        }
+        if ($this-&gt;_rel !== null) {
+            $element-&gt;setAttribute('rel', $this-&gt;_rel);
+        }
+        if ($this-&gt;_feed !== null) {
+            $element-&gt;appendChild($this-&gt;_feed-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        return $element;
+    }
+
+    protected function takeChildFromDOM($child)
+    {
+        $absoluteNodeName = $child-&gt;namespaceURI . ':' . $child-&gt;localName;
+        switch ($absoluteNodeName) {
+            case $this-&gt;lookupNamespace('atom') . ':' . 'feed';
+                $feed = new Zend_Gdata_Feed();
+                $feed-&gt;transferFromDOM($child);
+                $this-&gt;_feed = $feed;
+                break;
+        default:
+            parent::takeChildFromDOM($child);
+            break;
+        }
+    }
+
+    protected function takeAttributeFromDOM($attribute)
+    {
+        switch ($attribute-&gt;localName) {
+        case 'countHint':
+            $this-&gt;_countHint = $attribute-&gt;nodeValue;
+            break;
+        case 'href':
+            $this-&gt;_href = $attribute-&gt;nodeValue;
+            break;
+        case 'readOnly':
+            if ($attribute-&gt;nodeValue == &quot;true&quot;) {
+                $this-&gt;_readOnly = true;
+            }
+            else if ($attribute-&gt;nodeValue == &quot;false&quot;) {
+                $this-&gt;_readOnly = false;
+            }
+            else {
+                throw new Zend_Gdata_App_InvalidArgumentException(&quot;Expected 'true' or 'false' for gCal:selected#value.&quot;);
+            }
+            break;
+        case 'rel':
+            $this-&gt;_rel = $attribute-&gt;nodeValue;
+            break;
+        default:
+            parent::takeAttributeFromDOM($attribute);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getHref()
+    {
+        return $this-&gt;_href;
+    }
+
+    public function setHref($value)
+    {
+        $this-&gt;_href = $value;
+        return $this;
+    }
+
+    public function getReadOnly()
+    {
+        return $this-&gt;_readOnly;
+    }
+
+    public function setReadOnly($value)
+    {
+        $this-&gt;_readOnly = $value;
+        return $this;
+    }
+
+    public function getRel()
+    {
+        return $this-&gt;_rel;
+    }
+
+    public function setRel($value)
+    {
+        $this-&gt;_rel = $value;
+        return $this;
+    }
+
+    public function getFeed()
+    {
+        return $this-&gt;_feed;
+    }
+
+    public function setFeed($value)
+    {
+        $this-&gt;_feed = $value;
+        return $this;
+    }
+
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

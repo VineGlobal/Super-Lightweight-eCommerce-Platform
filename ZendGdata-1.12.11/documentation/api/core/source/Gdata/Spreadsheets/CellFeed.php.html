@@ -1,0 +1,203 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Spreadsheets
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * @see Zend_Gdata_Feed
+ */
+require_once 'Zend/Gdata/Feed.php';
+
+/**
+ * @see Zend_Gdata_Spreadsheets_Extension_RowCount
+ */
+require_once 'Zend/Gdata/Spreadsheets/Extension/RowCount.php';
+
+/**
+ * @see Zend_Gdata_Spreadsheets_Extension_ColCount
+ */
+require_once 'Zend/Gdata/Spreadsheets/Extension/ColCount.php';
+
+/**
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage   Spreadsheets
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Gdata_Spreadsheets_CellFeed extends Zend_Gdata_Feed
+{
+
+    /**
+    * The classname for individual feed elements.
+    *
+    * @var string
+    */
+    protected $_entryClassName = 'Zend_Gdata_Spreadsheets_CellEntry';
+
+    /**
+    * The classname for the feed.
+    *
+    * @var string
+    */
+    protected $_feedClassName = 'Zend_Gdata_Spreadsheets_CellFeed';
+
+    /**
+    * The row count for the feed.
+    *
+    * @var Zend_Gdata_Spreadsheets_Extension_RowCount
+    */
+    protected $_rowCount = null;
+
+    /**
+    * The column count for the feed.
+    *
+    * @var Zend_Gdata_Spreadsheets_Extension_ColCount
+    */
+    protected $_colCount = null;
+
+    /**
+     * Constructs a new Zend_Gdata_Spreadsheets_CellFeed object.
+     * @param DOMElement $element (optional) The XML Element on which to base this object.
+     */
+    public function __construct($element = null)
+    {
+        $this-&gt;registerAllNamespaces(Zend_Gdata_Spreadsheets::$namespaces);
+        parent::__construct($element);
+    }
+
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
+    {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this-&gt;rowCount != null) {
+            $element-&gt;appendChild($this-&gt;_rowCount-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        if ($this-&gt;colCount != null) {
+            $element-&gt;appendChild($this-&gt;_colCount-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        return $element;
+    }
+
+    protected function takeChildFromDOM($child)
+    {
+        $absoluteNodeName = $child-&gt;namespaceURI . ':' . $child-&gt;localName;
+        switch ($absoluteNodeName) {
+            case $this-&gt;lookupNamespace('gs') . ':' . 'rowCount';
+                $rowCount = new Zend_Gdata_Spreadsheets_Extension_RowCount();
+                $rowCount-&gt;transferFromDOM($child);
+                $this-&gt;_rowCount = $rowCount;
+                break;
+            case $this-&gt;lookupNamespace('gs') . ':' . 'colCount';
+                $colCount = new Zend_Gdata_Spreadsheets_Extension_ColCount();
+                $colCount-&gt;transferFromDOM($child);
+                $this-&gt;_colCount = $colCount;
+                break;
+            default:
+                parent::takeChildFromDOM($child);
+                break;
+        }
+    }
+
+    /**
+     * Gets the row count for this feed.
+     * @return string The row count for the feed.
+     */
+    public function getRowCount()
+    {
+        return $this-&gt;_rowCount;
+    }
+
+    /**
+     * Gets the column count for this feed.
+     * @return string The column count for the feed.
+     */
+    public function getColumnCount()
+    {
+        return $this-&gt;_colCount;
+    }
+
+    /**
+     * Sets the row count for this feed.
+     * @param string $rowCount The new row count for the feed.
+     */
+    public function setRowCount($rowCount)
+    {
+        $this-&gt;_rowCount = $rowCount;
+        return $this;
+    }
+
+    /**
+     * Sets the column count for this feed.
+     * @param string $colCount The new column count for the feed.
+     */
+    public function setColumnCount($colCount)
+    {
+        $this-&gt;_colCount = $colCount;
+        return $this;
+    }
+
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

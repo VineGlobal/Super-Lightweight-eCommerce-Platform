@@ -1,0 +1,137 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Gdata
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * A wrapper for strings for buffered reading.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Gdata
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Gdata_MimeBodyString
+{
+
+    /**
+     * The source string.
+     *
+     * @var string
+     */
+    protected $_sourceString = '';
+
+    /**
+     * The size of the MIME message.
+     * @var integer
+     */
+    protected $_bytesRead = 0;
+
+    /**
+     * Create a new MimeBodyString object.
+     *
+     * @param string $sourceString The string we are wrapping.
+     */
+    public function __construct($sourceString)
+    {
+        $this-&gt;_sourceString = $sourceString;
+        $this-&gt;_bytesRead = 0;
+    }
+
+    /**
+     * Read the next chunk of the string.
+     *
+     * @param integer $bytesRequested The size of the chunk that is to be read.
+     * @return string A corresponding piece of the string.
+     */
+    public function read($bytesRequested)
+    {
+      $len = strlen($this-&gt;_sourceString);
+      if($this-&gt;_bytesRead == $len) {
+          return FALSE;
+      } else if($bytesRequested &gt; $len - $this-&gt;_bytesRead) {
+          $bytesRequested = $len - $this-&gt;_bytesRead;
+      }
+
+      $buffer = substr($this-&gt;_sourceString, $this-&gt;_bytesRead, $bytesRequested);
+      $this-&gt;_bytesRead += $bytesRequested;
+
+      return $buffer;
+    }
+
+    /**
+     * The length of the string.
+     *
+     * @return int The length of the string contained in the object.
+     */
+    public function getSize()
+    {
+      return strlen($this-&gt;_sourceString);
+    }
+
+
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>
