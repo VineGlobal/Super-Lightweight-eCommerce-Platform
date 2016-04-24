@@ -21,6 +21,8 @@ The following are other notable features:
 **Google Sheets Back-end** (Please be kind, this is a real-time system. Updates are displayed on the e-commerce storefront instantly): 
 <a href="https://docs.google.com/spreadsheets/d/12Ljjd8dChaHq2YOExKXw77ri2UDgixQTVuZBgMY-o30/edit?usp=sharing">Google Sheets Back-end</a>
 
+If you have any questions about this project, please contact us at <info@vineglobal.com> to learn more.
+
 <br>
 ### Google Sheets Screenshot
 ![Google Sheets](http://blog.vineglobal.com/images/google-sheets-live.png)
@@ -30,5 +32,3 @@ The following are other notable features:
 
 ### Shopping Cart Screenshot
 ![Shopping Cart](http://blog.vineglobal.com/images/shopping-cart-small.png)
-
-If you have any questions about this project, please contact us at <info@vineglobal.com> to learn more.
