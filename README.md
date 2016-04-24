@@ -25,9 +25,9 @@ The following are other notable features:
 ![Google Sheets](http://blog.vineglobal.com/images/google-sheets-live.png)
 
 ### Home Page
-![Home Page](http://blog.vineglobal.com/images/home-page.PNG)
+![Home Page](http://blog.vineglobal.com/images/home-page-small.png)
 
 ### Shopping Cart
-![Shopping Cart](http://blog.vineglobal.com/images/shopping-cart.PNG)
+![Shopping Cart](http://blog.vineglobal.com/images/shopping-cart-small.png)
 
 If you have any questions about this project, please contact us at <info@vineglobal.com> to learn more.
