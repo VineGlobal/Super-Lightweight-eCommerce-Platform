@@ -23,11 +23,11 @@ If you have any questions about this project, please contact us at <info@vineglo
 
 <hr>
 
-### Google Sheets Screenshot
+### Google Sheets Mobile Screenshot
 ![Google Sheets](http://blog.vineglobal.com/images/google-sheets-live.png)
 
-### Home Page Screenshot
+### Home Page Mobile Screenshot
 ![Home Page](http://blog.vineglobal.com/images/home-page-small.png)
 
-### Shopping Cart Screenshot
+### Shopping Cart Mobile Screenshot
 ![Shopping Cart](http://blog.vineglobal.com/images/shopping-cart-small.png)
