@@ -23,7 +23,7 @@ If you have any questions about this project, please contact us at <info@vineglo
 
 <hr>
 
-### Google Sheets Mobile Screenshot
+### Google Sheets Screenshot
 ![Google Sheets](http://blog.vineglobal.com/images/google-sheets-live.png)
 
 ### Home Page Mobile Screenshot
