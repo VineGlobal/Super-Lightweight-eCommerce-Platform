@@ -14,18 +14,18 @@ The following are other notable features:
 6.	It's FREE.
 7.	Mult-lingual support; add as many languages as you want.
 
-### Home Page
-![Home Page](http://blog.vineglobal.com/images/home-page.PNG)
-
-### Shopping Cart
-![Shopping Cart](http://blog.vineglobal.com/images/shopping-cart.PNG)
-
 **Front-end Demo (English):** [http://store.vineos.io](http://store.vineos.io)
 
 **Front-end Demo (Spanish/Español):** [http://store-es.vineos.io](http://store-es.vineos.io)
 
 **Google Sheets Back-end** (Please be kind, this is a real-time system. Updates are displayed on the e-commerce storefront instantly): 
 <a href="https://docs.google.com/spreadsheets/d/12Ljjd8dChaHq2YOExKXw77ri2UDgixQTVuZBgMY-o30/edit?usp=sharing">Google Sheets Back-end</a>
+
+### Home Page
+![Home Page](http://blog.vineglobal.com/images/home-page.PNG)
+
+### Shopping Cart
+![Shopping Cart](http://blog.vineglobal.com/images/shopping-cart.PNG)
 
 <br>
 ![Shopping Cart](http://blog.vineglobal.com/images/google-sheets-live.png)
