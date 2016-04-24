@@ -15,7 +15,7 @@ The following are other notable features:
 7.	Mult-lingual support; add as many languages as you want.
 
 ### Home Page
-![Home Page](http://blog.vineglobal.com/images/home-page.PNG)
+![Home Page](http://blog.vineglobal.com/images/home-page.PNG =250x)
 
 ### Shopping Cart
 ![Shopping Cart](http://blog.vineglobal.com/images/shopping-cart.PNG)
