@@ -22,7 +22,7 @@ The following are other notable features:
 <a href="https://docs.google.com/spreadsheets/d/12Ljjd8dChaHq2YOExKXw77ri2UDgixQTVuZBgMY-o30/edit?usp=sharing">Google Sheets Back-end</a>
 
 <br>
-![Google Sheets](http://blog.vineglobal.com/images/google-sheets-live.png)
+![Google Sheets](http://blog.vineglobal.com/images/google-sheets-live-small.png)
 
 ### Home Page
 ![Home Page](http://blog.vineglobal.com/images/home-page-small.png)
