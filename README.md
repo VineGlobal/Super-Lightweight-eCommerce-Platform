@@ -2,11 +2,7 @@
 
 ## Super Lightweight eCommerce Platform --  Built with AngularJS and Google Sheets
 
-<div class="row text-center">
-  <img src='http://store.vineos.io/images/home-page.PNG' width="30%"/>
-</div>
-<br>
-![Home Page](http://blog.vineglobal.com/images/shopping-cart.PNG)
+![Home Page](http://blog.vineglobal.com/images/home-page.PNG)
 
 We like to work on a side-projects (maybe even to a fault). We recently released a new SaaS-based e-commerce platform geared for small businesses.  This platform is unique in several ways. First, the database is not really a database at all. The eCommerce platform's data is stored in Google Sheets. The product catalog, category management, and multi-lingual support are maintained using Google Sheets, and every data modification is updated in real-time. We initially started this project as a “proof of concept”, but we were pleasantly surprised how quickly we could launch a new e-commerce storefront. 
 
@@ -21,7 +17,7 @@ The following are other notable features:
 7.	Mult-lingual support; add as many languages as you want.
 
 
-<br>
+![Shopping Cart](http://blog.vineglobal.com/images/shopping-cart.PNG)
 
 <div class="row text-center">
   <img src='images/shopping-cart.PNG' width="30%"/>
@@ -47,5 +43,4 @@ The following are other notable features:
 Are you interested in learning more about this platform? Please contact us at <info@vineglobal.com> to learn more.
 Super Lightweight eCommerce Platform -- Built with AngularJS and Google Sheets    The eCommerce platform's data is stored in Google Sheets. The product catalog, category management, and multi-lingual support are maintained using Google Sheets, and every data modification is updated in real-time.
 
-
-[Click here](http://blog.vineglobal.com/super-lightweight-ecommerce-platform) to read more about the solution our blog.
+If you have any questions about this project, please contact us at <info@vineglobal.com> to learn more.
