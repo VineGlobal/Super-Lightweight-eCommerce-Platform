@@ -23,11 +23,11 @@ Other notable features:
 - It's FREE.
 - Mult-lingual support; add as many languages as you want.
 
-##Screen Capture of the AngularJS E-commerce (Digital Commerce) Product Page
+**Screen Capture of the AngularJS E-commerce (Digital Commerce) Product Page**
 
 <img src="http://blog.vineglobal.com/images/home-page.PNG" alt="AngularJS E-Commerce Product Page" width="50%"/>
 
 
-##Screen Capture of the AngularJS E-commerce (Digital Commerce) Shopping Cart
+**Screen Capture of the AngularJS E-commerce (Digital Commerce) Shopping Cart**
 
 <img src="http://blog.vineglobal.com/images/shopping-cart.PNG" alt="AngularJS E-Commerce Shopping Cart" width="50%"/>
