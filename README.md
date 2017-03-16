@@ -31,3 +31,9 @@ Other notable features:
 **Screen Capture of the AngularJS E-commerce (Digital Commerce) Shopping Cart**
 
 <img src="http://blog.vineglobal.com/images/shopping-cart.PNG" alt="AngularJS E-Commerce Shopping Cart" width="50%"/>
+
+## Getting Started
+
+### Installation
+
+- On the AngularJS-eCommerce Github repository page, click Clone or download.
