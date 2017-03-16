@@ -25,9 +25,9 @@ Other notable features:
 
 ##Screen Capture of the AngularJS E-commerce (Digital Commerce) Product Page
 
-<img src="http://blog.vineglobal.com/images/home-page.PNG" alt="AngularJS E-Commerce Product Page" width="30%"/>
+<img src="http://blog.vineglobal.com/images/home-page.PNG" alt="AngularJS E-Commerce Product Page" width="50%"/>
 
 
 ##Screen Capture of the AngularJS E-commerce (Digital Commerce) Shopping Cart
 
-<img src="http://blog.vineglobal.com/images/shopping-cart.PNG" alt="AngularJS E-Commerce Shopping Cart" width="30%"/>
+<img src="http://blog.vineglobal.com/images/shopping-cart.PNG" alt="AngularJS E-Commerce Shopping Cart" width="50%"/>
