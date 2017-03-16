@@ -1,0 +1,292 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Photos
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * @see Zend_Gdata_Photos
+ */
+require_once 'Zend/Gdata/Photos.php';
+
+/**
+ * @see Zend_Gdata_Feed
+ */
+require_once 'Zend/Gdata/Feed.php';
+
+/**
+ * @see Zend_Gdata_Photos_UserEntry
+ */
+require_once 'Zend/Gdata/Photos/UserEntry.php';
+
+/**
+ * @see Zend_Gdata_Photos_AlbumEntry
+ */
+require_once 'Zend/Gdata/Photos/AlbumEntry.php';
+
+/**
+ * @see Zend_Gdata_Photos_PhotoEntry
+ */
+require_once 'Zend/Gdata/Photos/PhotoEntry.php';
+
+/**
+ * @see Zend_Gdata_Photos_TagEntry
+ */
+require_once 'Zend/Gdata/Photos/TagEntry.php';
+
+/**
+ * @see Zend_Gdata_Photos_CommentEntry
+ */
+require_once 'Zend/Gdata/Photos/CommentEntry.php';
+
+/**
+ * Data model for a collection of entries for a specific user, usually
+ * provided by the servers.
+ *
+ * For information on requesting this feed from a server, see the
+ * service class, Zend_Gdata_Photos.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Photos
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Gdata_Photos_UserFeed extends Zend_Gdata_Feed
+{
+
+    /**
+     * gphoto:user element
+     *
+     * @var Zend_Gdata_Photos_Extension_User
+     */
+    protected $_gphotoUser = null;
+
+    /**
+     * gphoto:thumbnail element
+     *
+     * @var Zend_Gdata_Photos_Extension_Thumbnail
+     */
+    protected $_gphotoThumbnail = null;
+
+    /**
+     * gphoto:nickname element
+     *
+     * @var Zend_Gdata_Photos_Extension_Nickname
+     */
+    protected $_gphotoNickname = null;
+
+    protected $_entryClassName = 'Zend_Gdata_Photos_UserEntry';
+    protected $_feedClassName = 'Zend_Gdata_Photos_UserFeed';
+
+    protected $_entryKindClassMapping = array(
+        'http://schemas.google.com/photos/2007#album' =&gt; 'Zend_Gdata_Photos_AlbumEntry',
+        'http://schemas.google.com/photos/2007#photo' =&gt; 'Zend_Gdata_Photos_PhotoEntry',
+        'http://schemas.google.com/photos/2007#comment' =&gt; 'Zend_Gdata_Photos_CommentEntry',
+        'http://schemas.google.com/photos/2007#tag' =&gt; 'Zend_Gdata_Photos_TagEntry'
+    );
+
+    public function __construct($element = null)
+    {
+        $this-&gt;registerAllNamespaces(Zend_Gdata_Photos::$namespaces);
+        parent::__construct($element);
+    }
+
+    /**
+     * Creates individual Entry objects of the appropriate type and
+     * stores them in the $_entry array based upon DOM data.
+     *
+     * @param DOMNode $child The DOMNode to process
+     */
+    protected function takeChildFromDOM($child)
+    {
+        $absoluteNodeName = $child-&gt;namespaceURI . ':' . $child-&gt;localName;
+        switch ($absoluteNodeName) {
+            case $this-&gt;lookupNamespace('gphoto') . ':' . 'user';
+                $user = new Zend_Gdata_Photos_Extension_User();
+                $user-&gt;transferFromDOM($child);
+                $this-&gt;_gphotoUser = $user;
+                break;
+            case $this-&gt;lookupNamespace('gphoto') . ':' . 'nickname';
+                $nickname = new Zend_Gdata_Photos_Extension_Nickname();
+                $nickname-&gt;transferFromDOM($child);
+                $this-&gt;_gphotoNickname = $nickname;
+                break;
+            case $this-&gt;lookupNamespace('gphoto') . ':' . 'thumbnail';
+                $thumbnail = new Zend_Gdata_Photos_Extension_Thumbnail();
+                $thumbnail-&gt;transferFromDOM($child);
+                $this-&gt;_gphotoThumbnail = $thumbnail;
+                break;
+            case $this-&gt;lookupNamespace('atom') . ':' . 'entry':
+                $entryClassName = $this-&gt;_entryClassName;
+                $tmpEntry = new Zend_Gdata_App_Entry($child);
+                $categories = $tmpEntry-&gt;getCategory();
+                foreach ($categories as $category) {
+                    if ($category-&gt;scheme == Zend_Gdata_Photos::KIND_PATH &amp;&amp;
+                        $this-&gt;_entryKindClassMapping[$category-&gt;term] != &quot;&quot;) {
+                            $entryClassName = $this-&gt;_entryKindClassMapping[$category-&gt;term];
+                            break;
+                    } else {
+                        require_once 'Zend/Gdata/App/Exception.php';
+                        throw new Zend_Gdata_App_Exception('Entry is missing kind declaration.');
+                    }
+                }
+
+                $newEntry = new $entryClassName($child);
+                $newEntry-&gt;setHttpClient($this-&gt;getHttpClient());
+                $this-&gt;_entry[] = $newEntry;
+                break;
+            default:
+                parent::takeChildFromDOM($child);
+                break;
+        }
+    }
+
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
+    {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this-&gt;_gphotoUser != null) {
+            $element-&gt;appendChild($this-&gt;_gphotoUser-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        if ($this-&gt;_gphotoNickname != null) {
+            $element-&gt;appendChild($this-&gt;_gphotoNickname-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        if ($this-&gt;_gphotoThumbnail != null) {
+            $element-&gt;appendChild($this-&gt;_gphotoThumbnail-&gt;getDOM($element-&gt;ownerDocument));
+        }
+
+        return $element;
+    }
+
+    /**
+     * Get the value for this element's gphoto:user attribute.
+     *
+     * @see setGphotoUser
+     * @return string The requested attribute.
+     */
+    public function getGphotoUser()
+    {
+        return $this-&gt;_gphotoUser;
+    }
+
+    /**
+     * Set the value for this element's gphoto:user attribute.
+     *
+     * @param string $value The desired value for this attribute.
+     * @return Zend_Gdata_Photos_Extension_User The element being modified.
+     */
+    public function setGphotoUser($value)
+    {
+        $this-&gt;_gphotoUser = $value;
+        return $this;
+    }
+
+    /**
+     * Get the value for this element's gphoto:nickname attribute.
+     *
+     * @see setGphotoNickname
+     * @return string The requested attribute.
+     */
+    public function getGphotoNickname()
+    {
+        return $this-&gt;_gphotoNickname;
+    }
+
+    /**
+     * Set the value for this element's gphoto:nickname attribute.
+     *
+     * @param string $value The desired value for this attribute.
+     * @return Zend_Gdata_Photos_Extension_Nickname The element being modified.
+     */
+    public function setGphotoNickname($value)
+    {
+        $this-&gt;_gphotoNickname = $value;
+        return $this;
+    }
+
+    /**
+     * Get the value for this element's gphoto:thumbnail attribute.
+     *
+     * @see setGphotoThumbnail
+     * @return string The requested attribute.
+     */
+    public function getGphotoThumbnail()
+    {
+        return $this-&gt;_gphotoThumbnail;
+    }
+
+    /**
+     * Set the value for this element's gphoto:thumbnail attribute.
+     *
+     * @param string $value The desired value for this attribute.
+     * @return Zend_Gdata_Photos_Extension_Thumbnail The element being modified.
+     */
+    public function setGphotoThumbnail($value)
+    {
+        $this-&gt;_gphotoThumbnail = $value;
+        return $this;
+    }
+
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

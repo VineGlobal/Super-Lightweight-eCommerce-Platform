@@ -1,0 +1,208 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage App
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * @see Zend_Gdata_App_Extension
+ */
+require_once 'Zend/Gdata/App/Extension.php';
+
+/**
+ * @see Zend_Gdata_App_Extension_Name
+ */
+require_once 'Zend/Gdata/App/Extension/Name.php';
+
+/**
+ * @see Zend_Gdata_App_Extension_Email
+ */
+require_once 'Zend/Gdata/App/Extension/Email.php';
+
+/**
+ * @see Zend_Gdata_App_Extension_Uri
+ */
+require_once 'Zend/Gdata/App/Extension/Uri.php';
+
+/**
+ * Base class for people (currently used by atom:author, atom:contributor)
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage App
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+abstract class Zend_Gdata_App_Extension_Person extends Zend_Gdata_App_Extension
+{
+
+    protected $_rootElement = null;
+    protected $_name = null;
+    protected $_email = null;
+    protected $_uri = null;
+
+    public function __construct($name = null, $email = null, $uri = null)
+    {
+        parent::__construct();
+        $this-&gt;_name = $name;
+        $this-&gt;_email = $email;
+        $this-&gt;_uri = $uri;
+    }
+
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
+    {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this-&gt;_name != null) {
+            $element-&gt;appendChild($this-&gt;_name-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        if ($this-&gt;_email != null) {
+            $element-&gt;appendChild($this-&gt;_email-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        if ($this-&gt;_uri != null) {
+            $element-&gt;appendChild($this-&gt;_uri-&gt;getDOM($element-&gt;ownerDocument));
+        }
+        return $element;
+    }
+
+    protected function takeChildFromDOM($child)
+    {
+        $absoluteNodeName = $child-&gt;namespaceURI . ':' . $child-&gt;localName;
+        switch ($absoluteNodeName) {
+        case $this-&gt;lookupNamespace('atom') . ':' . 'name':
+            $name = new Zend_Gdata_App_Extension_Name();
+            $name-&gt;transferFromDOM($child);
+            $this-&gt;_name = $name;
+            break;
+        case $this-&gt;lookupNamespace('atom') . ':' . 'email':
+            $email = new Zend_Gdata_App_Extension_Email();
+            $email-&gt;transferFromDOM($child);
+            $this-&gt;_email = $email;
+            break;
+        case $this-&gt;lookupNamespace('atom') . ':' . 'uri':
+            $uri = new Zend_Gdata_App_Extension_Uri();
+            $uri-&gt;transferFromDOM($child);
+            $this-&gt;_uri = $uri;
+            break;
+        default:
+            parent::takeChildFromDOM($child);
+            break;
+        }
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Name
+     */
+    public function getName()
+    {
+        return $this-&gt;_name;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Name $value
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setName($value)
+    {
+        $this-&gt;_name = $value;
+        return $this;
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Email
+     */
+    public function getEmail()
+    {
+        return $this-&gt;_email;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Email $value
+     * @return Zend_Gdata_App_Extension_Person Provides a fluent interface
+     */
+    public function setEmail($value)
+    {
+        $this-&gt;_email = $value;
+        return $this;
+    }
+
+    /**
+     * @return Zend_Gdata_App_Extension_Uri
+     */
+    public function getUri()
+    {
+        return $this-&gt;_uri;
+    }
+
+    /**
+     * @param Zend_Gdata_App_Extension_Uri $value
+     * @return Zend_Gdata_App_Extension_Person Provides a fluent interface
+     */
+    public function setUri($value)
+    {
+        $this-&gt;_uri = $value;
+        return $this;
+    }
+
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

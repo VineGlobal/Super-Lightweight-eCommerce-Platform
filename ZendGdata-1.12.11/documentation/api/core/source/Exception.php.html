@@ -1,0 +1,141 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+* @category   Zend
+* @package    Zend
+* @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+* @license    http://framework.zend.com/license/new-bsd     New BSD License
+*/
+class Zend_Exception extends Exception
+{
+    /**
+     * @var null|Exception
+     */
+    private $_previous = null;
+
+    /**
+     * Construct the exception
+     *
+     * @param  string $msg
+     * @param  int $code
+     * @param  Exception $previous
+     * @return void
+     */
+    public function __construct($msg = '', $code = 0, Exception $previous = null)
+    {
+        if (version_compare(PHP_VERSION, '5.3.0', '&lt;')) {
+            parent::__construct($msg, (int) $code);
+            $this-&gt;_previous = $previous;
+        } else {
+            parent::__construct($msg, (int) $code, $previous);
+        }
+    }
+
+    /**
+     * Overloading
+     *
+     * For PHP &lt; 5.3.0, provides access to the getPrevious() method.
+     *
+     * @param  string $method
+     * @param  array $args
+     * @return mixed
+     */
+    public function __call($method, array $args)
+    {
+        if ('getprevious' == strtolower($method)) {
+            return $this-&gt;_getPrevious();
+        }
+        return null;
+    }
+
+    /**
+     * String representation of the exception
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        if (version_compare(PHP_VERSION, '5.3.0', '&lt;')) {
+            if (null !== ($e = $this-&gt;getPrevious())) {
+                return $e-&gt;__toString()
+                       . &quot;\n\nNext &quot;
+                       . parent::__toString();
+            }
+        }
+        return parent::__toString();
+    }
+
+    /**
+     * Returns previous Exception
+     *
+     * @return Exception|null
+     */
+    protected function _getPrevious()
+    {
+        return $this-&gt;_previous;
+    }
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

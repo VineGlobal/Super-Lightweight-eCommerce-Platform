@@ -1,0 +1,577 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Http
+ * @subpackage Client_Adapter
+ * @version    $Id$
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+
+/**
+ * @see Zend_Uri_Http
+ */
+require_once 'Zend/Uri/Http.php';
+
+/**
+ * @see Zend_Http_Client_Adapter_Interface
+ */
+require_once 'Zend/Http/Client/Adapter/Interface.php';
+/**
+ * @see Zend_Http_Client_Adapter_Stream
+ */
+require_once 'Zend/Http/Client/Adapter/Stream.php';
+
+/**
+ * An adapter class for Zend_Http_Client based on the curl extension.
+ * Curl requires libcurl. See for full requirements the PHP manual: http://php.net/curl
+ *
+ * @category   Zend
+ * @package    Zend_Http
+ * @subpackage Client_Adapter
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interface, Zend_Http_Client_Adapter_Stream
+{
+    /**
+     * Parameters array
+     *
+     * @var array
+     */
+    protected $_config = array();
+
+    /**
+     * What host/port are we connected to?
+     *
+     * @var array
+     */
+    protected $_connected_to = array(null, null);
+
+    /**
+     * The curl session handle
+     *
+     * @var resource|null
+     */
+    protected $_curl = null;
+
+    /**
+     * List of cURL options that should never be overwritten
+     *
+     * @var array
+     */
+    protected $_invalidOverwritableCurlOptions;
+
+    /**
+     * Response gotten from server
+     *
+     * @var string
+     */
+    protected $_response = null;
+
+    /**
+     * Stream for storing output
+     *
+     * @var resource
+     */
+    protected $out_stream;
+
+    /**
+     * Adapter constructor
+     *
+     * Config is set using setConfig()
+     *
+     * @return void
+     * @throws Zend_Http_Client_Adapter_Exception
+     */
+    public function __construct()
+    {
+        if (!extension_loaded('curl')) {
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception('cURL extension has to be loaded to use this Zend_Http_Client adapter.');
+        }
+        $this-&gt;_invalidOverwritableCurlOptions = array(
+            CURLOPT_HTTPGET,
+            CURLOPT_POST,
+            CURLOPT_PUT,
+            CURLOPT_CUSTOMREQUEST,
+            CURLOPT_HEADER,
+            CURLOPT_RETURNTRANSFER,
+            CURLOPT_HTTPHEADER,
+            CURLOPT_POSTFIELDS,
+            CURLOPT_INFILE,
+            CURLOPT_INFILESIZE,
+            CURLOPT_PORT,
+            CURLOPT_MAXREDIRS,
+            CURLOPT_CONNECTTIMEOUT,
+            CURL_HTTP_VERSION_1_1,
+            CURL_HTTP_VERSION_1_0,
+        );
+    }
+
+    /**
+     * Set the configuration array for the adapter
+     *
+     * @throws Zend_Http_Client_Adapter_Exception
+     * @param  Zend_Config | array $config
+     * @return Zend_Http_Client_Adapter_Curl
+     */
+    public function setConfig($config = array())
+    {
+        if ($config instanceof Zend_Config) {
+            $config = $config-&gt;toArray();
+
+        } elseif (! is_array($config)) {
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception(
+                'Array or Zend_Config object expected, got ' . gettype($config)
+            );
+        }
+
+        if(isset($config['proxy_user']) &amp;&amp; isset($config['proxy_pass'])) {
+            $this-&gt;setCurlOption(CURLOPT_PROXYUSERPWD, $config['proxy_user'].&quot;:&quot;.$config['proxy_pass']);
+            unset($config['proxy_user'], $config['proxy_pass']);
+        }
+
+        foreach ($config as $k =&gt; $v) {
+            $option = strtolower($k);
+            switch($option) {
+                case 'proxy_host':
+                    $this-&gt;setCurlOption(CURLOPT_PROXY, $v);
+                    break;
+                case 'proxy_port':
+                    $this-&gt;setCurlOption(CURLOPT_PROXYPORT, $v);
+                    break;
+                default:
+                    $this-&gt;_config[$option] = $v;
+                    break;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+      * Retrieve the array of all configuration options
+      *
+      * @return array
+      */
+     public function getConfig()
+     {
+         return $this-&gt;_config;
+     }
+
+    /**
+     * Direct setter for cURL adapter related options.
+     *
+     * @param  string|int $option
+     * @param  mixed $value
+     * @return Zend_Http_Adapter_Curl
+     */
+    public function setCurlOption($option, $value)
+    {
+        if (!isset($this-&gt;_config['curloptions'])) {
+            $this-&gt;_config['curloptions'] = array();
+        }
+        $this-&gt;_config['curloptions'][$option] = $value;
+        return $this;
+    }
+
+    /**
+     * Initialize curl
+     *
+     * @param  string  $host
+     * @param  int     $port
+     * @param  boolean $secure
+     * @return void
+     * @throws Zend_Http_Client_Adapter_Exception if unable to connect
+     */
+    public function connect($host, $port = 80, $secure = false)
+    {
+        // If we're already connected, disconnect first
+        if ($this-&gt;_curl) {
+            $this-&gt;close();
+        }
+
+        // If we are connected to a different server or port, disconnect first
+        if ($this-&gt;_curl
+            &amp;&amp; is_array($this-&gt;_connected_to)
+            &amp;&amp; ($this-&gt;_connected_to[0] != $host
+            || $this-&gt;_connected_to[1] != $port)
+        ) {
+            $this-&gt;close();
+        }
+
+        // Do the actual connection
+        $this-&gt;_curl = curl_init();
+        if ($port != 80) {
+            curl_setopt($this-&gt;_curl, CURLOPT_PORT, intval($port));
+        }
+
+        // Set timeout
+        if (defined('CURLOPT_CONNECTTIMEOUT_MS')) {
+            curl_setopt($this-&gt;_curl, CURLOPT_CONNECTTIMEOUT_MS, $this-&gt;_config['timeout'] * 1000);
+        } else {
+            curl_setopt($this-&gt;_curl, CURLOPT_CONNECTTIMEOUT, $this-&gt;_config['timeout']);
+        }
+
+        if (defined('CURLOPT_TIMEOUT_MS')) {
+            curl_setopt($this-&gt;_curl, CURLOPT_TIMEOUT_MS, $this-&gt;_config['timeout'] * 1000);
+        } else {
+            curl_setopt($this-&gt;_curl, CURLOPT_TIMEOUT, $this-&gt;_config['timeout']);
+        }
+
+        // Set Max redirects
+        curl_setopt($this-&gt;_curl, CURLOPT_MAXREDIRS, $this-&gt;_config['maxredirects']);
+
+        if (!$this-&gt;_curl) {
+            $this-&gt;close();
+
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception('Unable to Connect to ' .  $host . ':' . $port);
+        }
+
+        if ($secure !== false) {
+            // Behave the same like Zend_Http_Adapter_Socket on SSL options.
+            if (isset($this-&gt;_config['sslcert'])) {
+                curl_setopt($this-&gt;_curl, CURLOPT_SSLCERT, $this-&gt;_config['sslcert']);
+            }
+            if (isset($this-&gt;_config['sslpassphrase'])) {
+                curl_setopt($this-&gt;_curl, CURLOPT_SSLCERTPASSWD, $this-&gt;_config['sslpassphrase']);
+            }
+        }
+
+        // Update connected_to
+        $this-&gt;_connected_to = array($host, $port);
+    }
+
+    /**
+     * Send request to the remote server
+     *
+     * @param  string        $method
+     * @param  Zend_Uri_Http $uri
+     * @param  float         $http_ver
+     * @param  array         $headers
+     * @param  string        $body
+     * @return string        $request
+     * @throws Zend_Http_Client_Adapter_Exception If connection fails, connected to wrong host, no PUT file defined, unsupported method, or unsupported cURL option
+     */
+    public function write($method, $uri, $httpVersion = 1.1, $headers = array(), $body = '')
+    {
+        // Make sure we're properly connected
+        if (!$this-&gt;_curl) {
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception(&quot;Trying to write but we are not connected&quot;);
+        }
+
+        if ($this-&gt;_connected_to[0] != $uri-&gt;getHost() || $this-&gt;_connected_to[1] != $uri-&gt;getPort()) {
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception(&quot;Trying to write but we are connected to the wrong host&quot;);
+        }
+
+        // set URL
+        curl_setopt($this-&gt;_curl, CURLOPT_URL, $uri-&gt;__toString());
+
+        // ensure correct curl call
+        $curlValue = true;
+        switch ($method) {
+            case Zend_Http_Client::GET:
+                $curlMethod = CURLOPT_HTTPGET;
+                break;
+
+            case Zend_Http_Client::POST:
+                $curlMethod = CURLOPT_POST;
+                break;
+
+            case Zend_Http_Client::PUT:
+                // There are two different types of PUT request, either a Raw Data string has been set
+                // or CURLOPT_INFILE and CURLOPT_INFILESIZE are used.
+                if(is_resource($body)) {
+                    $this-&gt;_config['curloptions'][CURLOPT_INFILE] = $body;
+                }
+                if (isset($this-&gt;_config['curloptions'][CURLOPT_INFILE])) {
+                    // Now we will probably already have Content-Length set, so that we have to delete it
+                    // from $headers at this point:
+                    foreach ($headers AS $k =&gt; $header) {
+                        if (preg_match('/Content-Length:\s*(\d+)/i', $header, $m)) {
+                            if(is_resource($body)) {
+                                $this-&gt;_config['curloptions'][CURLOPT_INFILESIZE] = (int)$m[1];
+                            }
+                            unset($headers[$k]);
+                        }
+                    }
+
+                    if (!isset($this-&gt;_config['curloptions'][CURLOPT_INFILESIZE])) {
+                        require_once 'Zend/Http/Client/Adapter/Exception.php';
+                        throw new Zend_Http_Client_Adapter_Exception(&quot;Cannot set a file-handle for cURL option CURLOPT_INFILE without also setting its size in CURLOPT_INFILESIZE.&quot;);
+                    }
+
+                    if(is_resource($body)) {
+                        $body = '';
+                    }
+
+                    $curlMethod = CURLOPT_PUT;
+                } else {
+                    $curlMethod = CURLOPT_CUSTOMREQUEST;
+                    $curlValue = &quot;PUT&quot;;
+                }
+                break;
+
+            case Zend_Http_Client::PATCH:
+                $curlMethod = CURLOPT_CUSTOMREQUEST;
+                $curlValue = &quot;PATCH&quot;;
+                break;
+
+            case Zend_Http_Client::DELETE:
+                $curlMethod = CURLOPT_CUSTOMREQUEST;
+                $curlValue = &quot;DELETE&quot;;
+                break;
+
+            case Zend_Http_Client::OPTIONS:
+                $curlMethod = CURLOPT_CUSTOMREQUEST;
+                $curlValue = &quot;OPTIONS&quot;;
+                break;
+
+            case Zend_Http_Client::TRACE:
+                $curlMethod = CURLOPT_CUSTOMREQUEST;
+                $curlValue = &quot;TRACE&quot;;
+                break;
+
+            case Zend_Http_Client::HEAD:
+                $curlMethod = CURLOPT_CUSTOMREQUEST;
+                $curlValue = &quot;HEAD&quot;;
+                break;
+
+            default:
+                // For now, through an exception for unsupported request methods
+                require_once 'Zend/Http/Client/Adapter/Exception.php';
+                throw new Zend_Http_Client_Adapter_Exception(&quot;Method currently not supported&quot;);
+        }
+
+        if(is_resource($body) &amp;&amp; $curlMethod != CURLOPT_PUT) {
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception(&quot;Streaming requests are allowed only with PUT&quot;);
+        }
+
+        // get http version to use
+        $curlHttp = ($httpVersion == 1.1) ? CURL_HTTP_VERSION_1_1 : CURL_HTTP_VERSION_1_0;
+
+        // mark as HTTP request and set HTTP method
+        curl_setopt($this-&gt;_curl, CURLOPT_HTTP_VERSION, $curlHttp);
+        curl_setopt($this-&gt;_curl, $curlMethod, $curlValue);
+
+        if($this-&gt;out_stream) {
+            // headers will be read into the response
+            curl_setopt($this-&gt;_curl, CURLOPT_HEADER, false);
+            curl_setopt($this-&gt;_curl, CURLOPT_HEADERFUNCTION, array($this, &quot;readHeader&quot;));
+            // and data will be written into the file
+            curl_setopt($this-&gt;_curl, CURLOPT_FILE, $this-&gt;out_stream);
+        } else {
+            // ensure headers are also returned
+            curl_setopt($this-&gt;_curl, CURLOPT_HEADER, true);
+            curl_setopt($this-&gt;_curl, CURLINFO_HEADER_OUT, true);
+
+            // ensure actual response is returned
+            curl_setopt($this-&gt;_curl, CURLOPT_RETURNTRANSFER, true);
+        }
+
+        // set additional headers
+        $headers['Accept'] = '';
+        curl_setopt($this-&gt;_curl, CURLOPT_HTTPHEADER, $headers);
+
+        /**
+         * Make sure POSTFIELDS is set after $curlMethod is set:
+         * @link http://de2.php.net/manual/en/function.curl-setopt.php#81161
+         */
+        if ($method == Zend_Http_Client::POST) {
+            curl_setopt($this-&gt;_curl, CURLOPT_POSTFIELDS, $body);
+        } elseif ($curlMethod == CURLOPT_PUT) {
+            // this covers a PUT by file-handle:
+            // Make the setting of this options explicit (rather than setting it through the loop following a bit lower)
+            // to group common functionality together.
+            curl_setopt($this-&gt;_curl, CURLOPT_INFILE, $this-&gt;_config['curloptions'][CURLOPT_INFILE]);
+            curl_setopt($this-&gt;_curl, CURLOPT_INFILESIZE, $this-&gt;_config['curloptions'][CURLOPT_INFILESIZE]);
+            unset($this-&gt;_config['curloptions'][CURLOPT_INFILE]);
+            unset($this-&gt;_config['curloptions'][CURLOPT_INFILESIZE]);
+        } elseif ($method == Zend_Http_Client::PUT) {
+            // This is a PUT by a setRawData string, not by file-handle
+            curl_setopt($this-&gt;_curl, CURLOPT_POSTFIELDS, $body);
+        } elseif ($method == Zend_Http_Client::PATCH) {
+            // This is a PATCH by a setRawData string
+            curl_setopt($this-&gt;_curl, CURLOPT_POSTFIELDS, $body);
+        } elseif ($method == Zend_Http_Client::DELETE) {
+            // This is a DELETE by a setRawData string
+            curl_setopt($this-&gt;_curl, CURLOPT_POSTFIELDS, $body);
+        } elseif ($method == Zend_Http_Client::OPTIONS) {
+            // This is an OPTIONS by a setRawData string
+            curl_setopt($this-&gt;_curl, CURLOPT_POSTFIELDS, $body);
+        }
+
+        // set additional curl options
+        if (isset($this-&gt;_config['curloptions'])) {
+            foreach ((array)$this-&gt;_config['curloptions'] as $k =&gt; $v) {
+                if (!in_array($k, $this-&gt;_invalidOverwritableCurlOptions)) {
+                    if (curl_setopt($this-&gt;_curl, $k, $v) == false) {
+                        require_once 'Zend/Http/Client/Exception.php';
+                        throw new Zend_Http_Client_Exception(sprintf(&quot;Unknown or erroreous cURL option '%s' set&quot;, $k));
+                    }
+                }
+            }
+        }
+
+        // send the request
+        $response = curl_exec($this-&gt;_curl);
+
+        // if we used streaming, headers are already there
+        if(!is_resource($this-&gt;out_stream)) {
+            $this-&gt;_response = $response;
+        }
+
+        $request  = curl_getinfo($this-&gt;_curl, CURLINFO_HEADER_OUT);
+        $request .= $body;
+
+        if (empty($this-&gt;_response)) {
+            require_once 'Zend/Http/Client/Exception.php';
+            throw new Zend_Http_Client_Exception(&quot;Error in cURL request: &quot; . curl_error($this-&gt;_curl));
+        }
+
+        // cURL automatically decodes chunked-messages, this means we have to disallow the Zend_Http_Response to do it again
+        if (stripos($this-&gt;_response, &quot;Transfer-Encoding: chunked\r\n&quot;)) {
+            $this-&gt;_response = str_ireplace(&quot;Transfer-Encoding: chunked\r\n&quot;, '', $this-&gt;_response);
+        }
+
+        // Eliminate multiple HTTP responses.
+        do {
+            $parts  = preg_split('|(?:\r?\n){2}|m', $this-&gt;_response, 2);
+            $again  = false;
+
+            if (isset($parts[1]) &amp;&amp; preg_match(&quot;|^HTTP/1\.[01](.*?)\r\n|mi&quot;, $parts[1])) {
+                $this-&gt;_response    = $parts[1];
+                $again              = true;
+            }
+        } while ($again);
+
+        // cURL automatically handles Proxy rewrites, remove the &quot;HTTP/1.0 200 Connection established&quot; string:
+        if (stripos($this-&gt;_response, &quot;HTTP/1.0 200 Connection established\r\n\r\n&quot;) !== false) {
+            $this-&gt;_response = str_ireplace(&quot;HTTP/1.0 200 Connection established\r\n\r\n&quot;, '', $this-&gt;_response);
+        }
+
+        return $request;
+    }
+
+    /**
+     * Return read response from server
+     *
+     * @return string
+     */
+    public function read()
+    {
+        return $this-&gt;_response;
+    }
+
+    /**
+     * Close the connection to the server
+     *
+     */
+    public function close()
+    {
+        if(is_resource($this-&gt;_curl)) {
+            curl_close($this-&gt;_curl);
+        }
+        $this-&gt;_curl         = null;
+        $this-&gt;_connected_to = array(null, null);
+    }
+
+    /**
+     * Get cUrl Handle
+     *
+     * @return resource
+     */
+    public function getHandle()
+    {
+        return $this-&gt;_curl;
+    }
+
+    /**
+     * Set output stream for the response
+     *
+     * @param resource $stream
+     * @return Zend_Http_Client_Adapter_Socket
+     */
+    public function setOutputStream($stream)
+    {
+        $this-&gt;out_stream = $stream;
+        return $this;
+    }
+
+    /**
+     * Header reader function for CURL
+     *
+     * @param resource $curl
+     * @param string $header
+     * @return int
+     */
+    public function readHeader($curl, $header)
+    {
+        $this-&gt;_response .= $header;
+        return strlen($header);
+    }
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

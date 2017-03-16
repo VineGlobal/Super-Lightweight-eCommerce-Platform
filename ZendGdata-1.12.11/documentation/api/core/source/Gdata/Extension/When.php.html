@@ -1,0 +1,214 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Gdata
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * @see Zend_Gdata_Extension
+ */
+require_once 'Zend/Gdata/Extension.php';
+
+/**
+ * @see Zend_Gdata_Extension_Reminder
+ */
+require_once 'Zend/Gdata/Extension/Reminder.php';
+
+/**
+ * Represents the gd:when element
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Gdata
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
+{
+
+    protected $_rootElement = 'when';
+    protected $_reminders = array();
+    protected $_startTime = null;
+    protected $_valueString = null;
+    protected $_endTime = null;
+
+    public function __construct($startTime = null, $endTime = null,
+            $valueString = null, $reminders = null)
+    {
+        parent::__construct();
+        $this-&gt;_startTime = $startTime;
+        $this-&gt;_endTime = $endTime;
+        $this-&gt;_valueString = $valueString;
+        $this-&gt;_reminders = $reminders;
+    }
+
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
+    {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this-&gt;_startTime !== null) {
+            $element-&gt;setAttribute('startTime', $this-&gt;_startTime);
+        }
+        if ($this-&gt;_endTime !== null) {
+            $element-&gt;setAttribute('endTime', $this-&gt;_endTime);
+        }
+        if ($this-&gt;_valueString !== null) {
+            $element-&gt;setAttribute('valueString', $this-&gt;_valueString);
+        }
+        if ($this-&gt;_reminders !== null) {
+            foreach ($this-&gt;_reminders as $reminder) {
+                $element-&gt;appendChild(
+                        $reminder-&gt;getDOM($element-&gt;ownerDocument));
+            }
+        }
+        return $element;
+    }
+
+    protected function takeChildFromDOM($child)
+    {
+        $absoluteNodeName = $child-&gt;namespaceURI . ':' . $child-&gt;localName;
+        switch ($absoluteNodeName) {
+            case $this-&gt;lookupNamespace('gd') . ':' . 'reminder';
+                $reminder = new Zend_Gdata_Extension_Reminder();
+                $reminder-&gt;transferFromDOM($child);
+                $this-&gt;_reminders[] = $reminder;
+                break;
+        default:
+            parent::takeChildFromDOM($child);
+            break;
+        }
+    }
+
+    protected function takeAttributeFromDOM($attribute)
+    {
+        switch ($attribute-&gt;localName) {
+            case 'startTime':
+                $this-&gt;_startTime = $attribute-&gt;nodeValue;
+                break;
+            case 'endTime':
+                $this-&gt;_endTime = $attribute-&gt;nodeValue;
+                break;
+            case 'valueString':
+                $this-&gt;_valueString = $attribute-&gt;nodeValue;
+                break;
+            default:
+                parent::takeAttributeFromDOM($attribute);
+        }
+    }
+
+    public function __toString()
+    {
+        if ($this-&gt;_valueString)
+            return $this-&gt;_valueString;
+        else {
+            return 'Starts: ' . $this-&gt;getStartTime() . ' ' .
+                   'Ends: ' .  $this-&gt;getEndTime();
+        }
+    }
+
+    public function getStartTime()
+    {
+        return $this-&gt;_startTime;
+    }
+
+    public function setStartTime($value)
+    {
+        $this-&gt;_startTime = $value;
+        return $this;
+    }
+
+    public function getEndTime()
+    {
+        return $this-&gt;_endTime;
+    }
+
+    public function setEndTime($value)
+    {
+        $this-&gt;_endTime = $value;
+        return $this;
+    }
+
+    public function getValueString()
+    {
+        return $this-&gt;_valueString;
+    }
+
+    public function setValueString($value)
+    {
+        $this-&gt;_valueString = $value;
+        return $this;
+    }
+
+    public function getReminders()
+    {
+        return $this-&gt;_reminders;
+    }
+
+    public function setReminders($value)
+    {
+        $this-&gt;_reminders = $value;
+        return $this;
+    }
+
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

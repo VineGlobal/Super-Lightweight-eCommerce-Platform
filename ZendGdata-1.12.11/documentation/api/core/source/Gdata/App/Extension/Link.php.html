@@ -1,0 +1,264 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage App
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * @see Zend_Gdata_Extension
+ */
+require_once 'Zend/Gdata/Extension.php';
+
+/**
+ * Data model for representing an atom:link element
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage App
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
+{
+
+    protected $_rootElement = 'link';
+    protected $_href = null;
+    protected $_rel = null;
+    protected $_type = null;
+    protected $_hrefLang = null;
+    protected $_title = null;
+    protected $_length = null;
+
+    public function __construct($href = null, $rel = null, $type = null,
+            $hrefLang = null, $title = null, $length = null)
+    {
+        parent::__construct();
+        $this-&gt;_href = $href;
+        $this-&gt;_rel = $rel;
+        $this-&gt;_type = $type;
+        $this-&gt;_hrefLang = $hrefLang;
+        $this-&gt;_title = $title;
+        $this-&gt;_length = $length;
+    }
+
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
+    {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this-&gt;_href !== null) {
+            $element-&gt;setAttribute('href', $this-&gt;_href);
+        }
+        if ($this-&gt;_rel !== null) {
+            $element-&gt;setAttribute('rel', $this-&gt;_rel);
+        }
+        if ($this-&gt;_type !== null) {
+            $element-&gt;setAttribute('type', $this-&gt;_type);
+        }
+        if ($this-&gt;_hrefLang !== null) {
+            $element-&gt;setAttribute('hreflang', $this-&gt;_hrefLang);
+        }
+        if ($this-&gt;_title !== null) {
+            $element-&gt;setAttribute('title', $this-&gt;_title);
+        }
+        if ($this-&gt;_length !== null) {
+            $element-&gt;setAttribute('length', $this-&gt;_length);
+        }
+        return $element;
+    }
+
+    protected function takeAttributeFromDOM($attribute)
+    {
+        switch ($attribute-&gt;localName) {
+        case 'href':
+            $this-&gt;_href = $attribute-&gt;nodeValue;
+            break;
+        case 'rel':
+            $this-&gt;_rel = $attribute-&gt;nodeValue;
+            break;
+        case 'type':
+            $this-&gt;_type = $attribute-&gt;nodeValue;
+            break;
+        case 'hreflang':
+            $this-&gt;_hrefLang = $attribute-&gt;nodeValue;
+            break;
+        case 'title':
+            $this-&gt;_title = $attribute-&gt;nodeValue;
+            break;
+        case 'length':
+            $this-&gt;_length = $attribute-&gt;nodeValue;
+            break;
+        default:
+            parent::takeAttributeFromDOM($attribute);
+        }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHref()
+    {
+        return $this-&gt;_href;
+    }
+
+    /**
+     * @param string|null $value
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setHref($value)
+    {
+        $this-&gt;_href = $value;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRel()
+    {
+        return $this-&gt;_rel;
+    }
+
+    /**
+     * @param string|null $value
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setRel($value)
+    {
+        $this-&gt;_rel = $value;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType()
+    {
+        return $this-&gt;_type;
+    }
+
+    /**
+     * @param string|null $value
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setType($value)
+    {
+        $this-&gt;_type = $value;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHrefLang()
+    {
+        return $this-&gt;_hrefLang;
+    }
+
+    /**
+     * @param string|null $value
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setHrefLang($value)
+    {
+        $this-&gt;_hrefLang = $value;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTitle()
+    {
+        return $this-&gt;_title;
+    }
+
+    /**
+     * @param string|null $value
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setTitle($value)
+    {
+        $this-&gt;_title = $value;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLength()
+    {
+        return $this-&gt;_length;
+    }
+
+    /**
+     * @param string|null $value
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setLength($value)
+    {
+        $this-&gt;_length = $value;
+        return $this;
+    }
+
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

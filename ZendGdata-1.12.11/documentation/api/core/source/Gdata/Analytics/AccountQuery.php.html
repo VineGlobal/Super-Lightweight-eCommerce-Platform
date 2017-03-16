@@ -1,0 +1,235 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Analytics
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * @see Zend_Gdata_Query
+ */
+require_once 'Zend/Gdata/Query.php';
+
+/**
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Analytics
+ */
+class Zend_Gdata_Analytics_AccountQuery extends Zend_Gdata_Query
+{
+    const ANALYTICS_FEED_URI = 'https://www.googleapis.com/analytics/v2.4/management/accounts';
+
+    /**
+     * The default URI used for feeds.
+     */
+    protected $_defaultFeedUri = self::ANALYTICS_FEED_URI;
+    
+    /**
+     * @var string
+     */
+    protected $_accountId = '~all';
+    /**
+     * @var string
+     */
+    protected $_webpropertyId = '~all';
+    /**
+     * @var string
+     */
+    protected $_profileId = '~all';
+   
+    /**
+     * @var bool
+     */ 
+    protected $_webproperties = false;
+    /**
+     * @var bool
+     */
+    protected $_profiles = false;
+    /**
+     * @var bool
+     */
+    protected $_goals = false;
+    
+    /**
+     * @param string $accountId
+     * @return Zend_Gdata_Analytics_AccountQuery
+     */
+    public function setAccountId($accountId)
+    {
+        $this-&gt;_accountId = $accountId;
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getAccountId()
+    {
+        return $this-&gt;_accountId;
+    }
+
+    /**
+     * @param string $webpropertyId
+     * @return Zend_Gdata_Analytics_AccountQuery
+     */
+    public function setWebpropertyId($webpropertyId)
+    {
+        $this-&gt;_webpropertyId = $webpropertyId;
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getWebpropertyId()
+    {
+        return $this-&gt;_webpropertyId;
+    }
+    
+    /**
+     * @param string $profileId
+     * @return Zend_Gdata_Analytics_AccountQuery
+     */
+    public function setProfileId($profileId)
+    {
+        $this-&gt;_profileId = $profileId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfileId()
+    {
+        return $this-&gt;_profileId;
+    }
+    
+    /**
+     * @param string $accountId
+     * @return Zend_Gdata_Analytics_AccountQuery
+     */
+    public function webproperties($accountId = '~all')
+    {
+        $this-&gt;_webproperties = true;
+        $this-&gt;setAccountId($accountId);    
+        return $this;
+    }
+    
+    /**
+     * @param string $webpropertyId
+     * @param string $accountId
+     * @return Zend_Gdata_Analytics_AccountQuery
+     */
+    public function profiles($webpropertyId = '~all', $accountId = '~all')
+    {
+        $this-&gt;_profiles = true;
+        if (null !== $accountId) {
+            $this-&gt;setAccountId($accountId);    
+        }
+        $this-&gt;setWebpropertyId($webpropertyId);
+        return $this;
+    }
+    
+    /**
+     * @param string $webpropertyId
+     * @param string $accountId
+     * @param string $accountId
+     * @return Zend_Gdata_Analytics_AccountQuery
+     */
+    public function goals($profileId = '~all', $webpropertyId = '~all', $accountId = '~all')
+    {
+        $this-&gt;_goals = true;
+        if (null !== $accountId) {
+            $this-&gt;setAccountId($accountId);    
+        }
+        if (null !== $webpropertyId) {
+            $this-&gt;setWebpropertyId($webpropertyId);    
+        }
+        $this-&gt;setProfileId($profileId);
+        return $this;
+    }
+    
+    /**
+     * @return string url
+     */
+    public function getQueryUrl()
+    {
+        $url = $this-&gt;_defaultFeedUri;
+        
+        // add account id
+        if ($this-&gt;_webproperties or $this-&gt;_profiles or $this-&gt;_goals) {
+            $url .= '/' . $this-&gt;_accountId . '/webproperties';
+        }
+        
+        if ($this-&gt;_profiles or $this-&gt;_goals) {
+            $url .= '/' . $this-&gt;_webpropertyId . '/profiles';
+        }
+        
+        if ($this-&gt;_goals) {
+            $url .= '/' . $this-&gt;_profileId . '/goals';
+        }
+
+        $url .= $this-&gt;getQueryString();
+        return $url;
+    }
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,216 @@
+<html>
+    <head>
+        <script
+            type="text/javascript"
+            src="../../../js/jquery-1.4.2.min.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shCore.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushJScript.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushPhp.js">
+        </script>
+        <script
+            type="text/javascript"
+            src="../../../syntax_highlighter/scripts/shBrushXml.js">
+        </script>
+        <link
+            href="../../../syntax_highlighter/styles/shCore.css" rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shCoreEclipse.css"
+            rel="stylesheet" type="text/css"
+        />
+        <link
+            href="../../../syntax_highlighter/styles/shThemeWordpress.css"
+            rel="stylesheet" type="text/css"
+        />
+    </head>
+    <body>
+        <pre class="brush: php">&lt;?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Gdata
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+/**
+ * @see Zend_Gdata_Extension
+ */
+require_once 'Zend/Gdata/Extension.php';
+
+/**
+ * Implements the gd:reminder element used to set/retrieve notifications
+ *
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Gdata
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Gdata_Extension_Reminder extends Zend_Gdata_Extension
+{
+
+    protected $_rootElement = 'reminder';
+    protected $_absoluteTime = null;
+    protected $_method = null;
+    protected $_days = null;
+    protected $_hours = null;
+    protected $_minutes = null;
+
+    public function __construct($absoluteTime = null, $method = null, $days = null,
+            $hours = null, $minutes = null)
+    {
+        parent::__construct();
+        $this-&gt;_absoluteTime = $absoluteTime;
+        $this-&gt;_method = $method;
+        $this-&gt;_days = $days;
+        $this-&gt;_hours = $hours;
+        $this-&gt;_minutes = $minutes;
+    }
+
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
+    {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this-&gt;_absoluteTime !== null) {
+            $element-&gt;setAttribute('absoluteTime', $this-&gt;_absoluteTime);
+        }
+        if ($this-&gt;_method !== null) {
+            $element-&gt;setAttribute('method', $this-&gt;_method);
+        }
+        if ($this-&gt;_days !== null) {
+            $element-&gt;setAttribute('days', $this-&gt;_days);
+        }
+        if ($this-&gt;_hours !== null) {
+            $element-&gt;setAttribute('hours', $this-&gt;_hours);
+        }
+        if ($this-&gt;_minutes !== null) {
+            $element-&gt;setAttribute('minutes', $this-&gt;_minutes);
+        }
+        return $element;
+    }
+
+    protected function takeAttributeFromDOM($attribute)
+    {
+        switch ($attribute-&gt;localName) {
+            case 'absoluteTime':
+                $this-&gt;_absoluteTime = $attribute-&gt;nodeValue;
+                break;
+            case 'method':
+                $this-&gt;_method = $attribute-&gt;nodeValue;
+                break;
+            case 'days':
+                $this-&gt;_days = $attribute-&gt;nodeValue;
+                break;
+            case 'hours':
+                $this-&gt;_hours = $attribute-&gt;nodeValue;
+                break;
+            case 'minutes':
+                $this-&gt;_minutes = $attribute-&gt;nodeValue;
+                break;
+            default:
+                parent::takeAttributeFromDOM($attribute);
+        }
+    }
+
+    public function __toString()
+    {
+        $s = '';
+        if ($this-&gt;_absoluteTime)
+            $s = &quot; at &quot; . $this-&gt;_absoluteTime;
+        else if ($this-&gt;_days)
+            $s = &quot; in &quot; . $this-&gt;_days . &quot; days&quot;;
+        else if ($this-&gt;_hours)
+            $s = &quot; in &quot; . $this-&gt;_hours . &quot; hours&quot;;
+        else if ($this-&gt;_minutes)
+            $s = &quot; in &quot; . $this-&gt;_minutes . &quot; minutes&quot;;
+        return $this-&gt;_method . $s;
+    }
+
+    public function getAbsoluteTime()
+    {
+        return $this-&gt;_absoluteTime;
+    }
+
+    public function setAbsoluteTime($value)
+    {
+        $this-&gt;_absoluteTime = $value;
+        return $this;
+    }
+
+    public function getDays()
+    {
+        return $this-&gt;_days;
+    }
+
+    public function setDays($value)
+    {
+        $this-&gt;_days = $value;
+        return $this;
+    }
+    public function getHours()
+    {
+        return $this-&gt;_hours;
+    }
+
+    public function setHours($value)
+    {
+        $this-&gt;_hours = $value;
+        return $this;
+    }
+
+    public function getMinutes()
+    {
+        return $this-&gt;_minutes;
+    }
+
+    public function setMinutes($value)
+    {
+        $this-&gt;_minutes = $value;
+        return $this;
+    }
+
+    public function getMethod()
+    {
+        return $this-&gt;_method;
+    }
+
+    public function setMethod($value)
+    {
+        $this-&gt;_method = $value;
+        return $this;
+    }
+
+}
+</pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all();
+             jQuery('.gutter div').each(function(key, data){
+                jQuery(data).prepend('<a name="L'+jQuery(data).text()+'"/>');
+             });
+        </script>
+    </body>
+</html>

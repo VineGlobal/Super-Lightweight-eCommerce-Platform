@@ -1,0 +1,320 @@
+@font-face {
+	font-family: 'fontawesome';
+	src:url('font-awesome-4.0.1/fonts/fontawesome-webfont.eot');
+	src:url('font-awesome-4.0.1/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+		url('font-awesome-4.0.1/fonts/fontawesome-webfont.woff') format('woff'),
+		url('font-awesome-4.0.1/fonts/fontawesome-webfont.ttf') format('truetype'),
+		url('font-awesome-4.0.1/fonts/fontawesome-webfont.svg#fontawesome') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Main container 
+.cbp-vm-switcher {
+	padding: 20px;
+	border: 1px solid #353B49;
+}*/
+
+/* options/select wrapper with switch anchors */
+.cbp-vm-options {
+	text-align: right;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	float:right;
+}
+.container .cbp-vm-options li{
+    width:50px;
+    float:left;
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+	padding: 0px 0px 0px 0px;
+	border:0px;
+	cursor: pointer;
+	line-height: 18px;
+    }
+.container .cbp-vm-options li:first-child{
+    padding: 0px 10px 0px 0px;
+    }    
+.cbp-vm-options a {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	overflow: hidden;
+	white-space: nowrap;
+	color: #d0d0d0;
+	margin: 2px;
+}
+
+.cbp-vm-options a:hover,
+.cbp-vm-options a.cbpvmselected {
+	color: #353B49;
+}
+
+.cbp-vm-options a:before {
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	font-size: 30px;
+	text-align: center;
+	display: inline-block;
+}
+
+/* General style of switch items' list */
+.cbp-vm-switcher {
+	background:#fff;
+}
+.cbp-vm-switcher ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+/* Clear eventual floats */
+.cbp-vm-switcher ul:before, 
+.cbp-vm-switcher ul:after { 
+	content: " "; 
+	display: table; 
+}
+
+.cbp-vm-switcher ul:after { 
+	clear: both; 
+}
+
+.cbp-vm-switcher ul li {
+	display: block;
+	position: relative; 
+	-moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.cbp-vm-image {
+	display: block;
+	margin: 0 auto;
+}
+
+.cbp-vm-image img {
+	display: inline-block;
+	max-width: 100%;
+	border: none;
+}
+
+.cbp-vm-title {
+	margin: 0;
+	padding: 0;
+}
+
+.cbp-vm-price {
+	color: #c0c0c0;
+}
+
+.cbp-vm-add {
+	color: #fff;
+	background: #353B49;
+	padding: 10px 20px;
+	border-radius: 2px;
+	margin: 20px 0 0;
+	display: inline-block;
+	transition: background 0.2s;
+}
+
+.cbp-vm-add:hover {
+	color: #fff;
+	background: #02639d;
+}
+
+.cbp-vm-add:before {
+	margin-right: 5px;
+}
+
+/* Common icon styles */
+.cbp-vm-icon:before {
+	font-family: 'fontawesome';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+.cbp-vm-grid:before {
+	content: "\f00a";
+}
+
+.cbp-vm-list:before {
+	content: "\f00b";
+}
+
+.cbp-vm-add:before {
+	content: "\f055";
+}
+
+/* Individual view mode styles */
+
+/* Large grid view */
+.activegrid ul.nav-pills  {
+}
+.activegrid .content_desc {
+	text-align:left;
+	float: inherit;
+}
+.activegrid ul.nav-pills li {
+	padding: 25px;
+	width: 33.33333333%;
+	margin: 0px 0 0;
+	display: block;
+	min-height: 530px;
+	max-height: 530px;
+	vertical-align: top;
+	border-right:1px solid #EEE;
+	float:left;
+	
+}
+
+.activegrid .nav-pills .description{margin-left:0px;}
+.activegrid .nav-pills .rectangle-list li:after{display:none;}
+.activegrid .nav-pills .rating-f .example-f{}
+.activegrid ul.nav-pills li img{
+    text-align:center;
+    float:none;
+    margin-bottom:20px;
+     -webkit-transition: all 0.3s ease-out;  /* Chrome 1-25, Safari 3.2+ */
+     -moz-transition: all 0.3s ease-out;  /* Firefox 4-15 */
+       -o-transition: all 0.3s ease-out;  /* Opera 10.50�12.00 */
+          transition: all 0.3s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+    }
+.activegrid ul.nav-pills li:hover img 
+{
+	-webkit-transform: scale(1.1);  
+     -moz-transform: scale(1.1);  
+      -ms-transform: scale(1.1);  
+       -o-transform: scale(1.1);  
+          transform: scale(1.1);  
+}
+.activegrid .nav-pills .cbp-vm-title {
+	font-size: 1.3em;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.activegrid .nav-pills .cbp-vm-details {
+	max-width: 300px;
+	min-height: 70px;
+	margin: 0 auto;
+	color: #111111;
+    font-size: 14px;
+} 
+
+.activegrid .nav-pills .cbp-vm-price {
+	margin: 10px 0;
+	font-size: 1.5em;
+}
+
+
+/* List view */
+.cbp-vm-view-list li {
+	padding: 20px 0;
+}
+
+.cbp-vm-view-list .cbp-vm-image,
+.cbp-vm-view-list .cbp-vm-title,
+.cbp-vm-view-list .cbp-vm-details,
+.cbp-vm-view-list .cbp-vm-price,
+.cbp-vm-view-list .cbp-vm-add {
+	display: inline-block;
+	vertical-align: middle;
+	color: #111111;
+}
+
+.cbp-vm-view-list .cbp-vm-image {
+	width: 10%;
+}
+
+.cbp-vm-view-list .cbp-vm-title {
+	font-size: 1.3em;
+    font-weight: 700;
+    text-transform: uppercase;
+	padding: 0 10px;
+	white-space: normal;
+	width: 23%;
+}
+
+.cbp-vm-view-list .cbp-vm-price {
+	font-size: 1.3em;
+	width: 10%;
+}
+
+.cbp-vm-view-list .cbp-vm-details {
+	width: 40%;
+	padding: 0 15px;
+	overflow: hidden;
+	white-space: normal;
+}
+
+.cbp-vm-view-list .cbp-vm-add {
+	margin: 0;
+}
+@media only screen and (min-width: 700px) and (max-width: 1024px) and (orientation: landscape) 
+{
+    
+	.activegrid .nav-pills ul li{padding: 20px;}
+}
+@media screen and (max-width: 66.7em) {
+	.cbp-vm-view-list .cbp-vm-details  {
+		width: 50%;
+	}
+	.cbp-vm-view-list .cbp-vm-image{width:20%;}
+} 
+
+@media screen and (max-width: 57em) {
+	.activegrid ul.nav-pills li {
+		width: 49%;
+	}
+}
+
+@media screen and (max-width: 47.375em) {
+	.cbp-vm-view-list .cbp-vm-image {
+		width: 30%;
+	}
+
+	.cbp-vm-view-list .cbp-vm-title {
+		width: auto;
+	}
+
+	.cbp-vm-view-list .cbp-vm-details  {
+		display: block;
+		width: 100%;
+		margin: 0px 0;
+		font-size:14px;
+		padding: 5px 0px;
+	}
+
+	.cbp-vm-view-list .cbp-vm-add  {
+		margin: 10px;
+	}
+}
+
+@media screen and (max-width: 40.125em) {
+	.activegrid ul.nav-pills li {
+		width: 80%;
+	}
+}
+
+
+.jumbotron {
+background: #358CCE;
+color: #FFF;
+border-radius: 0px;
+}
+.jumbotron-sm { padding-top: 24px;
+padding-bottom: 24px; }
+.jumbotron small {
+color: #FFF;
+}
+.h1 small {
+font-size: 24px;
+}
+
