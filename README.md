@@ -24,8 +24,8 @@ Other notable features:
 - Mult-lingual support; add as many languages as you want.
 
 Screen Capture of the AngularJS E-commerce (Digital Commerce) Product Page
-![AngularJS E-Commerce Product Page](http://blog.vineglobal.com/images/home-page.PNG)
+![AngularJS E-Commerce Product Page](http://blog.vineglobal.com/images/home-page.PNG =60%)
 
 
 Screen Capture of the AngularJS E-commerce (Digital Commerce) Shopping Cart
-![AngularJS E-Commerce Shopping Cart](http://blog.vineglobal.com/images/shopping-cart.PNG)
+![AngularJS E-Commerce Shopping Cart](http://blog.vineglobal.com/images/shopping-cart.PNG =60%)
