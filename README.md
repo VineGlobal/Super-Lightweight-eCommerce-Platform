@@ -36,4 +36,9 @@ Other notable features:
 
 ### Installation
 
-- On the AngularJS-eCommerce Github repository page, click Clone or download.
+1. On the AngularJS-eCommerce Github repository page, click Clone or download button. These instructions will cover the download option.
+2. Download and unzip the ZIP file to your Web server.
+3. If you try to run the application, you will receive the following error message:
+4. Log into the Google API Console: https://console.developers.google.com If you haven't created a Google Developers account, you will be required to create on.
+5. Create a Google API Console project and client ID. For help, review https://developers.google.com/identity/sign-in/web/devconsole-project
+6. TBD
