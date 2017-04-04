@@ -36,9 +36,8 @@ Other notable features:
 
 ### Installation
 
+**For this installation, we are giving you access to use our Google API's project OAuth 2.0 client IDs -- please, please be kind). This will make the initial setup much easier for first users of Google API Managers.**
+
 1. On the AngularJS-eCommerce Github repository page, click Clone or download button. These instructions will cover the download option.
 2. Download and unzip the ZIP file to your Web server.
-3. If you try to run the application, you will receive the following error message:
-4. Log into the Google API Console: https://console.developers.google.com If you haven't created a Google Developers account, you will be required to create an account.
-5. Once you are logged in, click on the Credentials link. <img src="http://blog.vineglobal.com/images/credentials.png" alt="AngularJS E-Commerce Shopping Cart" width="50%"/>
-6. 
+3. Open your browser, and the webstore should be running.
