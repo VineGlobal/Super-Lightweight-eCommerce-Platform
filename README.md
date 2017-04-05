@@ -16,7 +16,7 @@ receives the data and automatically clears the data.
 
 Other notable features:
 
-- Mobile responsive. Looks great on both desktops and mobile devices. Give it a try: http://store.vineglobal.com
+- Mobile responsive. Looks great on both desktops and mobile devices. Give it a try (demo): http://store.vineglobal.com
 - Supports PayPal Express. Other payment options to follow soon.
 - Built with AngularJS by Google on the front-end.
 - Very theme-able: The sample site theme can be easily modified.
@@ -41,3 +41,7 @@ Other notable features:
 1. On the AngularJS-eCommerce Github repository page, click Clone or download button. These instructions will cover the download option.
 2. Download and unzip the ZIP file to your Web server.
 3. Open your browser, and the webstore should be running.
+
+The Googgle Sheet that contains the data (All changes made will go live):
+https://docs.google.com/spreadsheets/d/12Ljjd8dChaHq2YOExKXw77ri2UDgixQTVuZBgMY-o30/edit#gid=0
+
