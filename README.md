@@ -16,7 +16,7 @@ receives the data and automatically clears the data.
 
 Other notable features:
 
-- Mobile responsive. Looks great on both desktops and mobile devices. Give it a try (demo): http://store.vineglobal.com
+- Mobile responsive. Looks great on both desktops and mobile devices. Give it a try (demo): https://landedcost.io/demo
 - Supports PayPal Express. Other payment options to follow soon.
 - Built with AngularJS by Google on the front-end.
 - Very theme-able: The sample site theme can be easily modified.
