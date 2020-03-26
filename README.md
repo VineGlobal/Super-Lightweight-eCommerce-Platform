@@ -6,7 +6,7 @@ This platform is unique in several ways.
 First, the e-commerce storefront's data is stored completely in Google Sheets.
 The product catalog, category management, and multi-lingual labels (strings) are maintained in Google Sheets.
 
-![Google Sheets e-commerce database](http://blog.vineglobal.com/images/google-sheets-live.png)
+![Google Sheets e-commerce database](https://www.landedcost.io/demo/img/google-sheets-live.png)
 
 Secondly, performance is very fast and data updates are real-time.
 To improve performance, the storefront's data is cached locally. However, when the data is updated
@@ -25,12 +25,12 @@ Other notable features:
 
 **Screen Capture of the AngularJS E-commerce (Digital Commerce) Product Page**
 
-<img src="http://blog.vineglobal.com/images/home-page.PNG" alt="AngularJS E-Commerce Product Page" width="50%"/>
+<img src="https://www.landedcost.io/demo/img/home-page.PNG" alt="AngularJS E-Commerce Product Page" width="50%"/>
 
 
 **Screen Capture of the AngularJS E-commerce (Digital Commerce) Shopping Cart**
 
-<img src="http://blog.vineglobal.com/images/shopping-cart.PNG" alt="AngularJS E-Commerce Shopping Cart" width="50%"/>
+<img src="https://www.landedcost.io/demo/imgshopping-cart.PNG" alt="AngularJS E-Commerce Shopping Cart" width="50%"/>
 
 ## Getting Started
 
