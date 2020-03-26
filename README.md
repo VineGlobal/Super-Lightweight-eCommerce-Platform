@@ -30,7 +30,7 @@ Other notable features:
 
 **Screen Capture of the AngularJS E-commerce (Digital Commerce) Shopping Cart**
 
-<img src="https://landedcost.io/demo/imgs/hopping-cart.PNG" alt="AngularJS E-Commerce Shopping Cart" width="50%"/>
+<img src="https://landedcost.io/demo/img/shopping-cart.PNG" alt="AngularJS E-Commerce Shopping Cart" width="50%"/>
 
 ## Getting Started
 
