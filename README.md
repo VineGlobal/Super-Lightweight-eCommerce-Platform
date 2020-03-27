@@ -10,11 +10,10 @@ Secondly, performance is very fast and data modifications are real-time. Meaning
 
 To improve performance, the storefront's data is cached locally. 
 
-A Google Sheet script (macro) is triggered, and sends the data to the storefront via webhook. This webhook receives the data and automatically clears the data. 
-
 Other notable features:
 
 - Mobile responsive. Looks great on both desktops and mobile devices. Give it a try (demo): https://landedcost.io/demo
+- Integrated with the LandedCost.io landed cost API, which calculates import duties and taxes for cross-border ecommerce orders.
 - Supports PayPal Express. Other payment options to follow soon.
 - Built with AngularJS by Google on the front-end.
 - Very theme-able: The sample site theme can be easily modified.
