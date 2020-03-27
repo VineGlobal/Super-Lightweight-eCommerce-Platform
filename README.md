@@ -1,16 +1,16 @@
 # AngularJS E-commerce (Digital Commerce) Platform
-Super Lightweight Digital Commerce Platform -- Built with AngularJS and Google Sheets   
+Super Lightweight Digital Commerce Platform -- Built with AngularJS (Storefront) and Google Sheets (Back-end)
 
-This platform is unique in several ways. 
+This e-commerce atform is unique in several ways. 
 
-First, the e-commerce storefront's data is stored completely in Google Sheets.
-The product catalog, category management, and multi-lingual labels (strings) are maintained in Google Sheets.
+First, the e-commerce platform;s data is stored entirely in Google Sheets.
+The product catalog, category management, and multi-lingual labels are all maintained in Google Sheets.
 
-Secondly, performance is very fast and data updates are real-time.
-To improve performance, the storefront's data is cached locally. However, when the data is updated
-on the Google Sheet side, a Google Sheet script (macro) is triggered, and sends the data to your Web server via webhook. This webhook
-receives the data and automatically clears the data. 
+Secondly, performance is very fast and data modifications are real-time. Meaning, if you change any of the data in Google Sheets, the data is published to the storefront's data cache in real-time.
 
+To improve performance, the storefront's data is cached locally. 
+
+A Google Sheet script (macro) is triggered, and sends the data to the storefront via webhook. This webhook receives the data and automatically clears the data. 
 
 Other notable features:
 
