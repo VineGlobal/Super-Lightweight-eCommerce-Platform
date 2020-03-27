@@ -20,12 +20,9 @@ Other notable features:
 - It's FREE.
 - Mult-lingual support; add as many languages as you want. 
  
-
-## Getting Started
-
 ### Installation
 
-**For this installation, we are giving you access to use our Google API's project OAuth 2.0 client IDs -- please, please be kind). This will make the initial setup much easier for first users of Google API Managers.**
+**For this live tutorial, we are giving you access to use our Google API's project OAuth 2.0 client IDs -- please, please be kind). This will make the initial setup much easier for first users of Google API Managers.**
 
 1. On the AngularJS-eCommerce Github repository page, click Clone or download button. These instructions will cover the download option.
 2. Download and unzip the ZIP file to your Web server.
