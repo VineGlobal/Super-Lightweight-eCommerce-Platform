@@ -1,5 +1,5 @@
-# AngularJS E-commerce (Digital Commerce) Platform
-Super Lightweight Digital Commerce Platform -- Built with AngularJS (Storefront) and Google Sheets (Back-end)
+# LandedCost.io Digital Commerce Platform
+Super Lightweight Digital Commerce Platform -- Built with AngularJS (Storefront) and Google Sheets (Back-end) and integrated with a landed cost calculator to support cross-border e-commerce transactions
 
 This e-commerce atform is unique in several ways. 
 
