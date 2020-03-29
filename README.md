@@ -3,19 +3,18 @@ Super Lightweight Digital Commerce Platform -- Built with AngularJS (Storefront)
 
 This e-commerce atform is unique in several ways. 
 
-First, the e-commerce platform;s data is stored entirely in Google Sheets.
-The product catalog, category management, and multi-lingual labels are all maintained in Google Sheets.
+First, the e-commerce platform's backend data is managed 100% with Google Sheets.
+For example, the product catalog, category data, and multi-lingual labels are all maintained in Google Sheets.
 
-Secondly, performance is very fast and data modifications are real-time. Meaning, if you change any of the data in Google Sheets, the data is published to the storefront's data cache in real-time.
-
-To improve performance, the storefront's data is cached locally. 
+Secondly, performance is very fast, and data modifications are real-time. Meaning, if you change any of the data in Google Sheets, the data is published to the storefront in real-time.
 
 Other notable features:
 
 - Mobile responsive. Looks great on both desktops and mobile devices. Give it a try (demo): https://landedcost.io/demo
 - Integrated with the LandedCost.io landed cost API, which calculates import duties and taxes for cross-border ecommerce orders.
+  No other commerce platform has native landed cost integration such as this platform!
 - Supports PayPal Express. Other payment options to follow soon.
-- Built with AngularJS by Google on the front-end.
+- The client-side framework is AngularJS.
 - Very theme-able: The sample site theme can be easily modified.
 - It's FREE.
 - Mult-lingual support; add as many languages as you want. 
