@@ -4,8 +4,8 @@ Super Lightweight Digital Commerce Platform -- Built with AngularJS (Storefront)
 This e-commerce atform is unique in several ways. 
 
 First, the e-commerce platform's backend data is managed 100% with Google Sheets.
-For example, the product catalog, category data, and multi-lingual labels are all maintained in Google Sheets. 
-Content and product catalog modifications are real-time. 
+The product catalog, categories, and multi-lingual labels are all maintained in Google Sheets. 
+Content and product catalog modifications are published in real-time to the storefront. 
 
 Secondly, storefront performance is very fast. 
 
