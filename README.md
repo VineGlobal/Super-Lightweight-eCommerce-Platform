@@ -29,6 +29,8 @@ Other notable features:
 3. Make the cached-files folder writable.
 4. The storefront should be accessible in your browser
 5. If you wish to modify the Google Sheets data, please update the Webhook URL setting in the store_config tab.
+![image](https://github.com/VineGlobal/Super-Lightweight-eCommerce-Platform/assets/817291/d8e1fc89-e2b0-4abe-bb10-1ae2ca053204)
+
 6. To push data to your storefront click on the Publish Store Data menu item.
 
 The Googgle Sheet that contains the data (All changes made will go live):
