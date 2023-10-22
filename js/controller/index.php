@@ -1,4 +1,4 @@
-﻿<?php header('Content-Type: application/javascript');?>
+<?php header('Content-Type: application/javascript');?>
 'use strict';
 
 // the storeController contains two objects:
@@ -10,13 +10,14 @@ storeApp.controller('storeController', function ($scope, $routeParams, DataServi
     // get store and cart from service
     $scope.detailsprod = DataService.detailsprod;
     $scope.store = DataService.store;
-    $scope.cart = DataService.cart;
+    $scope.cart = DataService.cart;     
+ 
 	
 	 
     if ($routeParams.productCode != null) {
         $scope.product = $scope.store.getProduct($routeParams.productCode);
         
-        $http.get('http://<?php echo $_SERVER['SERVER_NAME'];?>/productoptions/?parentsku='+$routeParams.productCode).
+        $http.get('https://<?php echo $_SERVER['SERVER_NAME'];?>/demo/productoptions/?parentsku='+$routeParams.productCode).
     		success(function(data, status, headers, config) {
       		$scope.detail = data.productoptions;
       		 

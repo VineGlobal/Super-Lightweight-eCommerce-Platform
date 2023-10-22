@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include("../../main_oauth.php");
 ?>
  
@@ -21,13 +21,13 @@ include("../../main_oauth.php");
     <div class="row">
         <div class="col-md-8">
             <div class="well well-sm">
-                <form>
+                <form id="contactForm" name="contactForm" onsubmit="submitForm()">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name">
                                 Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter name" required="required" />
+                            <input type="text" class="form-control" id="name" placeholder="Enter Name" required="required" data-error="Name is missing"/>
                         </div>
                         <div class="form-group">
                             <label for="email">
@@ -41,7 +41,7 @@ include("../../main_oauth.php");
                             <label for="subject">
                                 Subject</label>
                             <select id="subject" name="subject" class="form-control" required="required">
-                                <option value="na" selected="">Choose One:</option>
+                                <option value="" selected>Choose One:</option>
                                 <option value="service">General Customer Service</option>
                                 <option value="suggestions">Suggestions</option>
                                 <option value="product">Product Support</option>
@@ -57,9 +57,11 @@ include("../../main_oauth.php");
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
+                        <button type="submit" class="btn btn-primary pull-right" id="form-submit">
                             Send Message</button>
                     </div>
+                    <br/>
+                     <div id="msgSubmit" class="h3 text-center hidden"></div>
                 </div>
                 </form>
             </div>

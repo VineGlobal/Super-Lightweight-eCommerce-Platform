@@ -1,4 +1,4 @@
-﻿<?php header('Content-Type: application/javascript');?>
+<?php header('Content-Type: application/javascript');?>
 <?php
 include("../../main_oauth.php");
 ?>
@@ -78,13 +78,14 @@ function store() {
 	this.products = [
 	 <?php 
 	 	$counter = 1;
-	 foreach ($products as $product) {
-	 		$sku 		 = $product['sku'];
-		    $category 	 = $product['category'];
-			$name 		 = $product['name'];
-			$imageurl	 = $product['imageurl'];
-			$description = $product['description'];
-			$price 			= $product['price'];
+        
+	 foreach ($products as $product) {        
+	 		$sku 		 = $product->sku;
+		    $category 	 = $product->category;
+			$name 		 = $product->name;
+			$imageurl	 = $product->imageurl;
+			$description = $product->description;
+			$price 			= $product->price;
     	 	echo "{ num:{$counter}, code: '{$sku}', category: '{$category}', name: '{$name}', src: '{$imageurl}', description: '{$description}', price: {$price}, cal: 10 },"; 	
     	 	$counter++;
     	 } ?>

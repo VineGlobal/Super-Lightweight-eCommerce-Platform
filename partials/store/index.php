@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include("../../main_oauth.php");
 ?>
   <div id="store" class="content col-md-12" style="overflow: hidden;" ng-controller="AdminController">  
@@ -25,10 +25,20 @@ include("../../main_oauth.php");
                         </div>
                         <div class="filter-button-top">
                         	<button class="btn flr-top-first active" ng-click="myFilter('category',null)"><?php echo _l('all');?></button>
-                        	<?php foreach ($types['categories'] as $category_key => $category_value) { ?>
-                           		<button class="btn flr-top" ng-click="myFilter('category','<?php echo $category_key;?>')"><?php echo $category_value;?></button>
-                           <?php } ?>
-                           
+                        	<?php
+                                                         //print_r((array)$products);
+                              $productsArr = (array)$products;     
+                              $categories = array();
+                              
+                              foreach ($productsArr as $prod) {
+                                    $categories[] =  $prod->category;
+                              }
+                              $categoriesUnique = array_unique($categories);
+                                                                                   
+                              foreach ($categoriesUnique as $category) {?>
+                                <button class="btn flr-top" ng-click="myFilter('category','<?php echo $category;?>')"><?php echo $category;?></button>
+                              <?php } ?>
+                              
                        </div>
                     </div>
                     
@@ -84,8 +94,10 @@ include("../../main_oauth.php");
     </form>
   </div>
 
-      <!-- Filter Images--><script type="text/javascript">
+      <!-- Filter Images-->
+<script type="text/javascript">
     $('.filter-button-top button').on('click', function () {
         $('.filter-button-top button').removeClass('active');
         $(this).addClass('active');
-    });</script>
+    });
+</script>

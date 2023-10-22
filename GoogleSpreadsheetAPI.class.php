@@ -136,7 +136,7 @@ class GoogleSpreadsheetAPI {
 		if (!$this->accessToken) throw new Exception('You must provide an accessToken');
 
 		$data = Http::curl(self::API_URL, array('v'=>'3.0','access_token' => $this->accessToken));
-		print_r($data);
+		
 		return json_decode($data, $this->assoc);
 
 	}
@@ -147,44 +147,74 @@ class GoogleSpreadsheetAPI {
 		if (!$this->accessToken) throw new Exception('You must provide an accessToken');
 
 		$data = Http::curl($spreadsheet_url, array('v'=>'3.0','access_token' => $this->accessToken));
-		print_r($data);
+		 
 		return json_decode($data, $this->assoc);
 
 	}  
 	
+	private function checkForEndingDoubleQuote($str) {
+		
+		if (substr($str, -1) === '"') {
+			return substr($str, 0, -1); // Remove the last character
+		}
+		return $str;
+	}
+	
 	
 	// Function to convert CSV into associative array
-	private	function csvToArray($file, $delimiter) { 
-		  if (($handle = fopen($file, 'r')) !== FALSE) { 
-		    $i = 0; 
-		    while (($lineArray = fgetcsv($handle, 4000, $delimiter, '"')) !== FALSE) { 
-		      for ($j = 0; $j < count($lineArray); $j++) { 
-		        $arr[$i][$j] = $lineArray[$j]; 
-		      } 
-		      $i++; 
-		    } 
-		    fclose($handle); 
-		  } 
-		  return $arr; 
-		} 
+	private	function csvToArray($file, $delimiter) {         
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $file);    
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $handle = curl_exec($ch) ;  
+                     
+        $lines = explode(PHP_EOL, $handle); 
+        $array = array();
+		$counter = 0;
+        foreach ($lines as $line) {
+			
+			$row = str_getcsv($line,",",'"'); 
+			if (sizeOf($row) == 1) { 
+				$previousCounter 		 	= $counter-1;
+				$prevData				 	= $array[$previousCounter][1];
+				$array[$previousCounter][1] = $prevData . $row[0];  //concat the new row  
+				
+				$array[$previousCounter][1] = $this->checkForEndingDoubleQuote($array[$previousCounter][1]);
+				
+			} else {
+				/* if the first element has a space, its not a key, and the row only has two values **/
+				if (strpos($row[0], ' ') !== false && sizeOf($row) == 2) {
+					$previousCounter 		 	= $counter-1;
+					$prevData				 	= $array[$previousCounter][1];
+					$array[$previousCounter][1] = $prevData . $row[0];  //concat the new row 
+					$array[$previousCounter][1] = $this->checkForEndingDoubleQuote($array[$previousCounter][1]);
+				} else {
+					 /* normal processsing **/
+					$array[$counter] = $row;
+					$counter++;
+				} 
+			} 
+        }
+		 
+         return $array;  
+           
+	} 
 	
 	public function getWorksheet($worksheet_url,$params) {
 
 		if (!$this->accessToken) throw new Exception('You must provide an accessToken');
-
+                                           
 		
-		$params = array_merge(array('v'=>'3.0','access_token' => $this->accessToken),$params);
-		$worksheet_url = $worksheet_url . "?" . http_build_query($params,'','&');
-		
-	 
-		
+		$params = array_merge(array('ndplr'=>'1','v'=>'3.0','access_token' => $this->accessToken),$params);
+		$worksheet_url = $worksheet_url . "?" . http_build_query($params,'','&');    
+		//echo $worksheet_url; echo "<br/>";
 		// Arrays we'll use later
 		$keys = array();
-		$newArray = array(); 
-		 
+		$newArray = array();            
 		// Do it
 		$data = $this->csvToArray($worksheet_url, ',');
-		 
+		// print_r($data);
 		// Set number of elements (minus 1 because we shift off the first row)
 		$count = count($data) - 1;
 		 
@@ -201,20 +231,25 @@ class GoogleSpreadsheetAPI {
 		for ($i = 0; $i < $count; $i++) {
 		  $data[$i][] = $i;
 		}
+		
+	
 		 
 		// Bring it all together
 		for ($j = 0; $j < $count; $j++) {
+		  /*  echo "-------:<br/> keys --"; 
+          	print_r($keys);
+			echo "-------:<br/> data -- ";
+			print_r($data[$j]);		
+			echo "-------  END<br/><br/>";
+			*/
 		  $d = array_combine($keys, $data[$j]);
 		  $newArray[$j] = $d;
 		}
- 
-		// Print it out as JSON
-		//echo json_encode($newArray);
-		//die();
+                  
 		
 	 	return $newArray;
 		
-		//return json_decode($newArray, $this->assoc);
+		 
 
 	}  
 

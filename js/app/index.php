@@ -1,6 +1,7 @@
 <?php header('Content-Type: application/javascript');?>
-<?php
+<?php 
 include("../../main_oauth.php");
+
 ?>
 'use strict';
 

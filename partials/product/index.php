@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include("../../main_oauth.php");
 ?>
 <div id="prod-top" class="prod-top-img col-md-12">
@@ -31,7 +31,7 @@ include("../../main_oauth.php");
 	   				 <td><?php echo _l('size');?>: {{ x.size }}</td>
 		   			<td> <button 
 		                class="btn btn-block btn-success" 
-		                ng-click="cart.addItem(x.sku,x.name, x.price, 1)">
+		                ng-click="cart.addItem(x.sku,x.name, x.price, 1,x.description)">
 		                <i class="icon-shopping-cart icon-white" /> <?php echo _l('add_to_cart');?>
 		            	</button>
 	            	</td>
@@ -41,7 +41,7 @@ include("../../main_oauth.php");
 	    			 <td colspan="2"><?php echo _l('only_one_size');?></td>
 	   				<td> <button 
 			                class="btn btn-block btn-success" 
-			                ng-click="cart.addItem(product.code, product.name, product.price, 1)">
+			                ng-click="cart.addItem(product.code, product.name, product.price, 1,product.description)">
 			                <i class="icon-shopping-cart icon-white" /> <?php echo _l('add_to_cart');?>
 			            </button>
 	            	</td>
