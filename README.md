@@ -28,15 +28,16 @@ Other notable features:
 2. Download and unzip the ZIP file to your Web server.
 3. Make the cached-files folder writable.
 4. The storefront should be accessible in your browser
-5. If you wish to modify the Google Sheets data and see the changes in your storefront, please update the Webhook URL setting in the store_config tab. The Webhook URL should be your webhook's public URL location.
+5. The following Googgle Sheet provides data to the storefront. Upcon accessing the Google Sheet, you will need to request editor access. We normally respond to each request less than 4-8 hours. 
+https://docs.google.com/spreadsheets/d/12Ljjd8dChaHq2YOExKXw77ri2UDgixQTVuZBgMY-o30/edit#gid=0
+6. If you wish to modify the Google Sheets data and see the changes in your storefront, please update the Webhook URL setting in the store_config tab. The Webhook URL should be your webhook's public URL location.
 
 ![image](https://github.com/VineGlobal/Super-Lightweight-eCommerce-Platform/assets/817291/d8e1fc89-e2b0-4abe-bb10-1ae2ca053204)
 
-6. To publish the Google Sheets data updates to your storefront click on the Publish Store Data menu item.
+7. To publish the Google Sheets data updates to your storefront click on the Publish Store Data menu item.
 
 ![image](https://github.com/VineGlobal/Super-Lightweight-eCommerce-Platform/assets/817291/b736df73-5c09-426b-9443-5e88a1ed625f)
 
 
-The Googgle Sheet that contains the data (All changes made will go live):
-https://docs.google.com/spreadsheets/d/12Ljjd8dChaHq2YOExKXw77ri2UDgixQTVuZBgMY-o30/edit#gid=0
+
 
