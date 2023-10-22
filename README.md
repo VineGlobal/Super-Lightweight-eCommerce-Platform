@@ -24,9 +24,12 @@ Other notable features:
 
 **For this live tutorial, we are giving you access to use our Google API's project OAuth 2.0 client IDs -- please, please be kind). This will make the initial setup much easier for first time users of the Google Sheet API.**
 
-1. On the AngularJS-eCommerce Github repository page, click Clone or download button. These instructions will cover the download option.
+1. On the Super-Lightweight-eCommerce-Platform Github repository page, click Clone or download button. These instructions will cover the download option.
 2. Download and unzip the ZIP file to your Web server.
-3. Open your browser, and the webstore should be running.
+3. Make the cached-files folder writable.
+4. The storefront should be accessible in your browser
+5. If you wish to modify the Google Sheets data, please update the Webhook URL setting in the store_config tab.
+6. To push data to your storefront click on the Publish Store Data menu item.
 
 The Googgle Sheet that contains the data (All changes made will go live):
 https://docs.google.com/spreadsheets/d/12Ljjd8dChaHq2YOExKXw77ri2UDgixQTVuZBgMY-o30/edit#gid=0
