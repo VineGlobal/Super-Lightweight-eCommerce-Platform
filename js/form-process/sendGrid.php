@@ -7,11 +7,11 @@ error_reporting(E_ALL);
   
 class Mail {
   
-  private $sendGridAPIKey 	= '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';
+  private $sendGridAPIKey 	= 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
   private $url 				= 'https://api.sendgrid.com/'; 
   private $template_id 		= '1';
-  public $fromEmail         = "admin@landedcost.io";
-  public $fromName          = "Landed Cost.io Support";  
+  public $fromEmail         = "admin@email.com";
+  public $fromName          = "Support";  
   public $toEmail;
   public $toName;
   public $text 			;
