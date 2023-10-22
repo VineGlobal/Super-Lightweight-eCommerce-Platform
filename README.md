@@ -28,9 +28,9 @@ Other notable features:
 2. Download and unzip the ZIP file to your Web server.
 3. Make the cached-files folder writable.
 4. The storefront should be accessible in your browser
-5. The following Googgle Sheet provides data to the storefront. Upcon accessing the Google Sheet, you will need to request editor access. We normally respond to each request less than 4-8 hours. 
+5. The following Googgle Sheet provides the data for the storefront. Upcon accessing the Google Sheet, you will need to request editor access. We normally respond to each request less than 4-8 hours. 
 https://docs.google.com/spreadsheets/d/12Ljjd8dChaHq2YOExKXw77ri2UDgixQTVuZBgMY-o30/edit#gid=0
-6. If you wish to modify the Google Sheets data and see the changes in your storefront, please update the Webhook URL setting in the store_config tab. The Webhook URL should be your webhook's public URL location.
+6. If you wish to modify the Google Sheets data and see the data changes in your storefront, please update the Webhook URL setting in the store_config tab. The Webhook URL should be your webhook's public URL location.
 
 ![image](https://github.com/VineGlobal/Super-Lightweight-eCommerce-Platform/assets/817291/d8e1fc89-e2b0-4abe-bb10-1ae2ca053204)
 
@@ -38,6 +38,12 @@ https://docs.google.com/spreadsheets/d/12Ljjd8dChaHq2YOExKXw77ri2UDgixQTVuZBgMY-
 
 ![image](https://github.com/VineGlobal/Super-Lightweight-eCommerce-Platform/assets/817291/b736df73-5c09-426b-9443-5e88a1ed625f)
 
+8. If you find this platform useful, and plan to use it long-term, you will need to create a copy of the Google Sheets and request your P12 Key from Google.
+
+If you have any questions or feedback, please email us at admin@landedcost.io
+
+Thank You,
+LandedCost.io Team
 
 
 
