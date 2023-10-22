@@ -1,5 +1,5 @@
-﻿@import url(http://fonts.googleapis.com/css?family=Crafty+Girls|Poiret+One|Paytone+One|Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic|Anton|Shadows+Into+Light|Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic|Oswald:400,300,700|Oxygen:400,300,700|Francois+One|Nunito:400,300,700|Changa+One:400,400italic|Righteous|Shadows+Into+Light+Two|Passion+One:400,700,900|Archivo+Black|Scada:400italic,700italic,400,700);
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+﻿@import url(https://fonts.googleapis.com/css?family=Crafty+Girls|Poiret+One|Paytone+One|Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic|Anton|Shadows+Into+Light|Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic|Oswald:400,300,700|Oxygen:400,300,700|Francois+One|Nunito:400,300,700|Changa+One:400,400italic|Righteous|Shadows+Into+Light+Two|Passion+One:400,700,900|Archivo+Black|Scada:400italic,700italic,400,700);
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
 @font-face {
 	font-family: 'BebasNeuewebfont';
 	src: url('fonts/BebasNeuewebfont.eot');
@@ -79,9 +79,7 @@ a:hover {
 .container .well{
     margin-left:auto;
     background-color:rgba(255,255,255,1);
-    margin-right:auto;
-    font-family: 'quicksand regular', Sans-Serif;
-    text-transform: uppercase;
+    margin-right:auto;        
 	font-weight:300;
 	border-radius: 1px;
 	margin-top:20px;
@@ -102,7 +100,8 @@ a:hover {
 	 margin:10px 5px 0 15px;
 	 background-color: #fff;
 	 background-image: none;
-	 border-bottom:1px solid #ccc;
+	 color: #000;
+     border-bottom:1px solid #ccc;
 }
 .flr-top-first.active, button.flr-top.active {
 	background-image: none;
@@ -118,6 +117,7 @@ button.flr-top {
 	 border-bottom:1px solid #ccc;
 	 background-color:#fff;
 	 background-image: none;
+     color: #000;
 }
 button.flr-top-first:hover, button.flr-top:hover {
 	color: #000;
@@ -467,7 +467,8 @@ table{background:rgba(255,255,255,0.8);}
 }
 
 .btn-block {
-	width:95%;
+	width:100%;
+    border-radius: 17px;
 }
 
 #prod-top.span12{
@@ -515,6 +516,14 @@ table{background:rgba(255,255,255,0.8);}
 
 .table td.tdCenter {
   text-align: center;
+}
+
+.table td.tdLeft {
+  text-align: left;
+}
+
+.table td.tdRight {
+  text-align: right;
 }
 
 .table-nonfluid {
@@ -833,4 +842,47 @@ table tr:hover {
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
 	padding:4px;
+}
+
+h1 { font-size: 30px;}
+
+.container {
+    width: 100%;
+}
+
+* {
+  font-family: sans-serif;
+}
+
+.cookieAcceptBar {
+  display:none;
+  position: fixed;
+  top: 50%;
+  left:0;
+  /* right: 0;  */
+  text-align: left;
+  background-color: #333;
+  color: #fff;
+  padding: 20px 10px;
+  z-index: 99999;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.cookieAcceptBar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: #2387c0;
+  color: #fff;
+  text-transform: uppercase;
+  margin-top: 10px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
 }
