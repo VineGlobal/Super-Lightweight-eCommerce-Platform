@@ -32,8 +32,8 @@ if (empty($_POST["subject"])) {
 }
 
 
-$EmailTo = "mraygoza@landedcost.io";
-$Subject = "***Landed Cost API Interest from Demo Store***";
+$EmailTo = "recipient@email.com";
+$Subject = "***Interest Form***";
 
 // prepare email body text
 $Body = "";
