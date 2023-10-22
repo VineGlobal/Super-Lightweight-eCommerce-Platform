@@ -32,7 +32,7 @@ Other notable features:
 
 ![image](https://github.com/VineGlobal/Super-Lightweight-eCommerce-Platform/assets/817291/d8e1fc89-e2b0-4abe-bb10-1ae2ca053204)
 
-6. To push data to your storefront click on the Publish Store Data menu item.
+6. To publish the Google Sheets data updates to your storefront click on the Publish Store Data menu item.
 
 ![image](https://github.com/VineGlobal/Super-Lightweight-eCommerce-Platform/assets/817291/b736df73-5c09-426b-9443-5e88a1ed625f)
 
